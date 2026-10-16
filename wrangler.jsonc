@@ -1,0 +1,19 @@
+/*
+ * Cloudflare Workers with Static Assets: no Worker script, only the static
+ * export in out/ (built by `pnpm build`). Deployed by Workers Builds on push
+ * to main. The www to root redirect is a dashboard Redirect Rule, not code.
+ * Headers and caching: public/_headers (copied into out/ by the build).
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "coralcoders",
+  "compatibility_date": "2026-10-16",
+  "assets": {
+    "directory": "./out",
+    // Unknown paths get out/404.html with a 404 status.
+    "not_found_handling": "404-page",
+    // Matches next.config.ts `trailingSlash: true`: /courses/scratch gets one
+    // redirect to /courses/scratch/, the canonical URL.
+    "html_handling": "force-trailing-slash"
+  }
+}

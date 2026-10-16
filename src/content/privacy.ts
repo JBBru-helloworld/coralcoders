@@ -6,11 +6,12 @@
 export const privacy = {
   title: "Privacy notice",
   metaDescription:
-    "How Coral Coders handles your information: no forms, cookies or trackers, and only the details you choose to share when you contact us.",
+    "How Coral Coders handles your information: no forms, cookies or advertising trackers, and only the details you choose to share when you contact us.",
   sections: [
     {
       heading: "What this website collects",
-      body: "This website does not use forms, cookies or advertising trackers. It does not collect personal information when you browse it.",
+      body:
+        "This website does not use forms, cookies or advertising trackers. We use Cloudflare Web Analytics to count visits anonymously. It does not use cookies and does not collect personal information.",
     },
     {
       heading: "When you contact us",

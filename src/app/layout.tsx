@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { MobileCtaBar } from "@/components/cta/mobile-cta-bar";
+import { AnalyticsBeacon } from "@/components/site/analytics-beacon";
 import { NavStateProvider } from "@/components/site/nav-state";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
@@ -86,6 +87,7 @@ export default function RootLayout({
           <SiteFooter />
           <MobileCtaBar />
         </NavStateProvider>
+        <AnalyticsBeacon />
       </body>
     </html>
   );

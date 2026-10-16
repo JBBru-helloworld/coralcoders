@@ -53,3 +53,6 @@ next-env.d.ts
 
 # QA screenshots and reports (Phase 7)
 /docs/qa/
+
+# wrangler dev local state
+/.wrangler/
