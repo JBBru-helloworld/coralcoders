@@ -3,7 +3,6 @@ import {
   areaServed,
   contact,
   countryNames,
-  courseDescription,
   coursePath,
   courses,
   description,
@@ -22,7 +21,7 @@ export function GET() {
       .filter((course) => course.audience === audience)
       .map(
         (course) =>
-          `- [${course.title}](${absoluteUrl(coursePath(course))}) (${course.ageLabel}): ${courseDescription(course)}`,
+          `- [${course.title}](${absoluteUrl(coursePath(course))}) (${course.ageLabel}): ${course.shortDescription}`,
       )
       .join("\n");
 

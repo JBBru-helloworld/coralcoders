@@ -53,7 +53,7 @@ Fluid scale (Tailwind utilities `text-display`, `text-h1`, `text-h2`, `text-h3`,
 
 | Step | Size | Leading | Tracking |
 |---|---|---|---|
-| display | 3rem to 6rem | 0.98 | -0.025em |
+| display | 3.5rem to 6rem | 0.98 | -0.025em |
 | h1 | 2.5rem to 4.25rem | 1.02 | -0.02em |
 | h2 | 2rem to 3rem | 1.08 | -0.015em |
 | h3 | 1.5rem to 2rem | 1.15 | -0.01em |

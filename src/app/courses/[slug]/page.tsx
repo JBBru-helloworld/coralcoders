@@ -7,7 +7,7 @@ import { JsonLd } from "@/components/json-ld";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, courseSchema } from "@/lib/schema";
 import {
-  courseDescription,
+  courseMetaDescription,
   coursePath,
   courses,
   getCourse,
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: CoursePageProps) {
   if (!course) return {};
   return pageMetadata({
     title: course.metaTitle,
-    description: courseDescription(course),
+    description: courseMetaDescription(course),
     path: coursePath(course),
     image: {
       path: `${coursePath(course)}og.png`,
@@ -77,7 +77,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
           </h1>
           <p className="text-small font-medium text-coral-deep">{course.ageLabel}</p>
         </div>
-        <p className="max-w-[56ch] text-lead text-mist">{courseDescription(course)}</p>
+        <p className="max-w-[56ch] text-lead text-mist">{course.shortDescription}</p>
         <div className="flex flex-wrap gap-3">
           <WhatsAppButton size="lg" course={course} />
           <EmailButton size="lg" course={course} />

@@ -10,8 +10,8 @@ import {
   areaServed,
   contact,
   countryNames,
-  courseDescription,
   coursePath,
+  courses,
   description,
   locale,
   siteName,
@@ -47,6 +47,19 @@ export function organizationSchema(): JsonLdNode {
       name: countryNames[code],
     })),
     knowsLanguage: "en",
+    // Every course, referenced by the @id its course page defines in full.
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Online coding courses",
+      itemListElement: courses.map((course) => ({
+        "@type": "Course",
+        "@id": ids.course(course),
+        name: course.title,
+        url: absoluteUrl(coursePath(course)),
+        description: course.shortDescription,
+        provider: ref(ids.organization),
+      })),
+    },
     // Placeholder until Phase 4 fills in the tutor; personSchema() then
     // describes the same @id in full.
     founder: { "@type": "Person", "@id": ids.founder, ...(tutor.name && { name: tutor.name }) },
@@ -69,7 +82,7 @@ export function courseSchema(course: Course): JsonLdNode {
     "@type": "Course",
     "@id": ids.course(course),
     name: course.title,
-    description: courseDescription(course),
+    description: course.shortDescription,
     url: absoluteUrl(coursePath(course)),
     provider: ref(ids.organization),
     inLanguage: "en",

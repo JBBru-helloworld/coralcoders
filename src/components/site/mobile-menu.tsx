@@ -13,10 +13,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { contact, navSections, siteName } from "@/lib/site";
+import { type Course, contact, navSections, siteName } from "@/lib/site";
 import { prefersReducedMotion, useNavState } from "./nav-state";
 
-export function MobileMenu({ isHome }: { isHome: boolean }) {
+export function MobileMenu({ isHome, course }: { isHome: boolean; course?: Course }) {
   const { menuOpen, setMenuOpen } = useNavState();
   const router = useRouter();
   // Section to scroll to once the sheet has closed and the scroll lock is released.
@@ -50,7 +50,7 @@ export function MobileMenu({ isHome }: { isHome: boolean }) {
     >
       <SheetTrigger
         aria-label="Open menu"
-        className="-mr-2 inline-flex size-11 items-center justify-center rounded-full text-ink transition-colors duration-(--duration-fast) hover:bg-ink/[0.05] md:hidden"
+        className="-mr-2 inline-flex size-11 items-center justify-center rounded-full text-ink transition-colors duration-(--duration-fast) hover:bg-ink/[0.05] lg:hidden"
       >
         <Menu className="size-5" aria-hidden="true" />
       </SheetTrigger>
@@ -90,8 +90,13 @@ export function MobileMenu({ isHome }: { isHome: boolean }) {
         </nav>
 
         <div className="flex flex-col gap-3 border-t border-mist-line px-5 pt-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-          <WhatsAppButton size="lg" className="w-full" />
-          <EmailButton size="lg" className="w-full" label={`Email ${contact.email}`} />
+          <WhatsAppButton size="lg" course={course} className="w-full" />
+          <EmailButton
+            size="lg"
+            course={course}
+            className="w-full"
+            label={`Email ${contact.email}`}
+          />
         </div>
       </SheetContent>
     </Sheet>

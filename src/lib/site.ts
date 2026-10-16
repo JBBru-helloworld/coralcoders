@@ -7,7 +7,12 @@ export type Audience = "kids" | "adults";
 
 export type Course = {
   slug: string;
+  /** Full name, unique across the site (footer, course page, messages). */
   title: string;
+  /** Name inside its audience group on the homepage, e.g. "Python". */
+  shortTitle: string;
+  /** Large serif label on the homepage: the age for kids, a monogram for adults. */
+  marker: string;
   /** Page title before the " | Coral Coders" suffix. Keep under ~45 chars. */
   metaTitle: string;
   audience: Audience;
@@ -124,61 +129,78 @@ export function mailtoLink(
   return `mailto:${contact.email}?${params.join("&")}`;
 }
 
-// TODO(phase-3): shortDescription copy for every course.
 export const courses: Course[] = [
   {
     slug: "scratch",
     title: "Scratch",
+    shortTitle: "Scratch",
+    marker: "6+",
     metaTitle: "Scratch Coding Lessons for Kids",
     audience: "kids",
     ageLabel: "Ages 6+",
     minAge: 6,
-    shortDescription: "",
+    shortDescription:
+      "Drag-and-drop blocks, real programming ideas. Children build animations, stories and games while learning loops, events and logic, without having to type a line of syntax.",
   },
   {
     slug: "python-for-kids",
     title: "Python for Kids",
+    shortTitle: "Python",
+    marker: "9+",
     metaTitle: "Python Lessons for Kids",
     audience: "kids",
     ageLabel: "Ages 9+",
     minAge: 9,
-    shortDescription: "",
+    shortDescription:
+      "The language professionals use every day, made approachable. Learners write their first real programs, from quizzes and text adventures to simple games, building habits that carry straight into school computing and beyond.",
   },
   {
     slug: "ai-machine-learning-for-teens",
     title: "AI and Machine Learning",
+    shortTitle: "AI and Machine Learning",
+    marker: "12+",
     metaTitle: "AI and Machine Learning for Teens",
     audience: "kids",
     ageLabel: "Ages 12+",
     minAge: 12,
-    shortDescription: "",
+    shortDescription:
+      "How does a computer learn to recognise a cat? Teens find out by building it. Using Python, they train simple models, explore how chatbots work and learn to use AI tools thoughtfully and safely.",
   },
   {
     slug: "python-for-adults",
     title: "Python for Adults",
+    shortTitle: "Python",
+    marker: "Py",
     metaTitle: "Python Lessons for Adults",
     audience: "adults",
     ageLabel: "Professionals and university students",
     minAge: 18,
-    shortDescription: "",
+    shortDescription:
+      "From your first line of code to automating your own work. Ideal for professionals tired of repetitive tasks and for students who need Python for their degree.",
   },
   {
     slug: "sql",
     title: "SQL",
+    shortTitle: "SQL",
+    marker: "SQL",
     metaTitle: "SQL Lessons for Adults",
     audience: "adults",
     ageLabel: "Professionals and university students",
     minAge: 18,
-    shortDescription: "",
+    shortDescription:
+      "Ask your data questions and get real answers. Learn to query, join and summarise databases, the core skill behind analytics and reporting roles.",
   },
   {
     slug: "ai-and-prompt-engineering",
-    title: "Machine Learning, Prompt Engineering and AI",
+    title: "AI, Machine Learning and Prompt Engineering",
+    shortTitle: "AI, Machine Learning and Prompt Engineering",
+    marker: "AI",
     metaTitle: "AI and Prompt Engineering for Adults",
     audience: "adults",
     ageLabel: "Professionals and university students",
     minAge: 18,
-    shortDescription: "",
+    shortDescription:
+      "Use AI properly, not just casually. Understand how models work, write prompts that give reliable results and build small machine learning projects in Python.",
   },
 ];
 
@@ -190,9 +212,17 @@ export function coursePath(course: Course): string {
   return `/courses/${course.slug}/`;
 }
 
-/** Meta description for a course page. Uses the Phase 3 copy once it exists. */
-export function courseDescription(course: Course): string {
-  if (course.shortDescription) return course.shortDescription;
+/** The course a pathname belongs to ("/courses/sql/" -> SQL), if any. */
+export function courseForPath(pathname: string): Course | undefined {
+  const match = pathname.match(/^\/courses\/([^/]+)\/?$/);
+  return match ? getCourse(match[1]) : undefined;
+}
+
+/**
+ * Meta description for a course page: kept under 155 characters, so it is
+ * generated rather than reusing the longer shortDescription.
+ */
+export function courseMetaDescription(course: Course): string {
   const who =
     course.audience === "kids"
       ? `children, ${course.ageLabel.toLowerCase()},`

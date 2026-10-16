@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useNavState } from "@/components/site/nav-state";
 import { usePastHero } from "@/components/site/use-scroll-state";
+import { courseForPath } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { EmailButton } from "./email-button";
 import { WhatsAppButton } from "./whatsapp-button";
@@ -15,6 +16,7 @@ import { WhatsAppButton } from "./whatsapp-button";
 export function MobileCtaBar() {
   const pathname = usePathname();
   const pastHero = usePastHero(pathname);
+  const course = courseForPath(pathname);
   const { menuOpen } = useNavState();
   const visible = pastHero && !menuOpen;
 
@@ -30,8 +32,8 @@ export function MobileCtaBar() {
       )}
     >
       <div className="mx-auto flex max-w-md gap-2">
-        <WhatsAppButton size="md" className="flex-1" />
-        <EmailButton size="md" label="Email" />
+        <WhatsAppButton size="md" course={course} className="flex-1" />
+        <EmailButton size="md" course={course} label="Email" />
       </div>
     </div>
   );

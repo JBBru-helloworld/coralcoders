@@ -15,11 +15,9 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-// Mono is only used for small accents, so it is not preloaded.
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-  preload: false,
 });
 
 const instrumentSerif = Instrument_Serif({
