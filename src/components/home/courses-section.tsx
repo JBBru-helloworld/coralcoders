@@ -84,7 +84,7 @@ export function CoursesSection() {
               <TabsTrigger
                 key={audience}
                 value={audience}
-                className="z-10 h-10 rounded-full px-5 text-small text-mist transition-colors duration-(--duration-spring) ease-out pointer-hover:not-data-active:text-ink data-active:bg-transparent data-active:text-sand data-active:shadow-none focus-visible:border-transparent focus-visible:ring-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                className="z-10 h-10 rounded-full max-md:h-11 px-5 text-small text-mist transition-colors duration-(--duration-spring) ease-out pointer-hover:not-data-active:text-ink data-active:bg-transparent data-active:text-sand data-active:shadow-none focus-visible:border-transparent focus-visible:ring-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               >
                 {coursesSection.groups[audience].label}
               </TabsTrigger>
@@ -96,7 +96,7 @@ export function CoursesSection() {
               key={audience}
               value={audience}
               keepMounted
-              className="course-panel mt-8 text-base data-hidden:hidden"
+              className="course-panel mt-8 rounded-sm text-base data-hidden:hidden focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring focus-visible:outline-solid"
             >
               <CourseList audience={audience} />
             </TabsContent>
@@ -129,7 +129,7 @@ function CourseRow({ course }: { course: Course }) {
       >
         {course.marker}
       </p>
-      <div className="flex max-w-[58ch] flex-col gap-3">
+      <div className="flex max-w-[38.45em] flex-col gap-3">
         <h3 className="text-h3">
           {course.shortTitle}
           <span className="sr-only">{`, ${course.ageLabel.toLowerCase()}`}</span>
@@ -142,10 +142,11 @@ function CourseRow({ course }: { course: Course }) {
           size="sm"
           course={course}
           label={coursesSection.book}
+          className="max-md:h-11"
         />
         <Link
           href={coursePath(course)}
-          className="learn-more group/link inline-flex items-center gap-1.5 rounded-sm text-small font-medium text-link underline decoration-current/30 underline-offset-4 transition-colors duration-(--duration-fast) pointer-hover:decoration-current"
+          className="learn-more group/link inline-flex items-center max-md:min-h-11 gap-1.5 rounded-sm text-small font-medium text-link underline decoration-current/30 underline-offset-4 transition-colors duration-(--duration-fast) pointer-hover:decoration-current"
         >
           {coursesSection.learnMore}
           <span className="sr-only"> about {course.title} lessons</span>

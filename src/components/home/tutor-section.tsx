@@ -37,7 +37,7 @@ export function TutorSection() {
               <p className="font-heading text-h3">{tutor.name}</p>
               <p className="text-small font-medium text-coral-deep">{tutor.role}</p>
             </div>
-            <div className="flex max-w-[58ch] flex-col gap-4 text-lead text-mist">
+            <div className="flex max-w-[38.45em] flex-col gap-4 text-lead text-mist">
               {tutor.bio.map((paragraph) => (
                 <p key={paragraph.slice(0, 24)}>{paragraph}</p>
               ))}
@@ -63,7 +63,7 @@ export function TutorSection() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/link inline-flex items-center gap-1 rounded-sm text-small font-medium text-link"
+                  className="group/link inline-flex items-center gap-1 rounded-sm text-small font-medium text-link max-md:min-h-11"
                 >
                   <span className="u-link">{link.label}</span>
                   <ArrowUpRight aria-hidden="true" className="nudge size-4" />

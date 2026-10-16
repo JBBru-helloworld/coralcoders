@@ -31,14 +31,14 @@ export function HowItWorks() {
               </span>
               <div className="flex flex-col gap-2.5 pt-2 md:pt-0">
                 <h3 className="font-sans text-lead font-medium">{step.title}</h3>
-                <p className="max-w-[40ch] text-mist">{step.body}</p>
+                <p className="max-w-[26.52em] text-mist">{step.body}</p>
               </div>
             </li>
           ))}
         </ol>
 
         <div className="mt-16 flex flex-col gap-8 border-t border-mist-line pt-10 md:mt-24 md:flex-row md:items-end md:justify-between">
-          <div className="flex max-w-[52ch] flex-col gap-2 text-mist">
+          <div className="flex max-w-[34.48em] flex-col gap-2 text-mist">
             <p>{pricingNote}</p>
             <p>{howItWorks.requirements}</p>
           </div>

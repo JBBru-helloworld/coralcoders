@@ -9,17 +9,20 @@ import {
   lessonLanguageNote,
   navSections,
   pricingNote,
+  privacyPath,
   siteName,
 } from "@/lib/site";
 
+// Phones get 44px-tall rows (tap targets); the hover underline sits on the
+// inner text span (u-link) so it stays under the words.
 const linkClass =
-  "u-link rounded-sm text-mist-on-ink transition-colors duration-(--duration-fast) ease-out pointer-hover:text-sand";
+  "group/link inline-flex items-center rounded-sm text-mist-on-ink transition-colors duration-(--duration-fast) ease-out max-md:min-h-11 max-md:min-w-11 pointer-hover:text-sand";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="dark">
+    <footer className="site-footer dark">
       <div className="mx-auto w-full max-w-6xl px-5 pt-20 pb-10 sm:px-8">
         <div className="grid gap-12 sm:grid-cols-2 sm:gap-10 lg:grid-cols-[1.4fr_1fr_1.2fr_1.2fr]">
           <div className="flex max-w-xs flex-col gap-4">
@@ -34,7 +37,7 @@ export function SiteFooter() {
               {navSections.map((section) => (
                 <li key={section.id}>
                   <Link href={`/#${section.id}`} className={linkClass}>
-                    {section.label}
+                    <span className="u-link">{section.label}</span>
                   </Link>
                 </li>
               ))}
@@ -44,7 +47,7 @@ export function SiteFooter() {
               {courses.map((course) => (
                 <li key={course.slug}>
                   <Link href={coursePath(course)} className={linkClass}>
-                    {course.title}
+                    <span className="u-link">{course.title}</span>
                   </Link>
                 </li>
               ))}
@@ -61,7 +64,7 @@ export function SiteFooter() {
                 className={linkClass}
               >
                 <span className="sr-only">Instagram </span>
-                {contact.instagramHandle}
+                <span className="u-link">{contact.instagramHandle}</span>
                 <span className="sr-only"> (opens in a new tab)</span>
               </a>
             </li>
@@ -74,8 +77,13 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-8 flex flex-col gap-2 text-label tracking-normal text-mist-on-ink/80 sm:flex-row sm:justify-between">
-          <p>
-            © {year} {siteName}.
+          <p className="flex flex-wrap items-center gap-x-4">
+            <span>
+              © {year} {siteName}.
+            </span>
+            <Link href={privacyPath} className={linkClass}>
+              <span className="u-link">Privacy notice</span>
+            </Link>
           </p>
           <p>
             Some UI components by{" "}
@@ -105,7 +113,7 @@ function FooterColumn({
   return (
     <div className="flex flex-col gap-4">
       <h2 className="font-sans text-small font-medium text-sand">{title}</h2>
-      <ul className="flex flex-col gap-2.5 text-small">{children}</ul>
+      <ul className="flex flex-col text-small md:gap-2.5">{children}</ul>
     </div>
   );
 }

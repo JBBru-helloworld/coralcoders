@@ -16,7 +16,7 @@ export function WhyCode() {
           {/* Words brighten one by one as the sentence scrolls into place (CSS
               scroll timeline). Screen readers get the sentence once, from the
               visually hidden copy; the word spans are hidden from them. */}
-          <p className="statement max-w-[22ch] font-heading text-h1 text-sand">
+          <p className="statement max-w-[10.12em] font-heading text-h1 text-sand">
             <span className="sr-only">{whyCode.statement}</span>
             <span aria-hidden="true">
               {whyCode.statement.split(" ").map((word, index) => (
@@ -43,7 +43,7 @@ export function WhyCode() {
               </span>
               <div className="flex flex-col gap-2.5">
                 <h3 className="font-sans text-lead font-medium text-sand">{point.title}</h3>
-                <p className="max-w-[54ch] text-mist-on-ink">{point.body}</p>
+                <p className="max-w-[35.8em] text-mist-on-ink">{point.body}</p>
               </div>
             </li>
           ))}
@@ -53,7 +53,7 @@ export function WhyCode() {
           {whyCode.adultsPrompt}{" "}
           <a
             href={`#${adultCoursesHash}`}
-            className="group/link inline-flex items-center gap-1.5 rounded-sm font-medium text-coral underline decoration-coral/40 underline-offset-4 transition-colors duration-(--duration-fast) pointer-hover:decoration-coral"
+            className="group/link inline-flex items-center gap-1.5 rounded-sm font-medium text-coral max-md:min-h-11 underline decoration-coral/40 underline-offset-4 transition-colors duration-(--duration-fast) pointer-hover:decoration-coral"
           >
             {whyCode.adultsLink}
             <ArrowRight

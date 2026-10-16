@@ -45,7 +45,7 @@ export function CodeCard({
   return (
     <figure
       className={cn(
-        "dark overflow-hidden rounded-2xl bg-ink-raised shadow-[0_24px_48px_-24px_oklch(0.193_0.039_263.1/0.55)] ring-1 ring-sand/12",
+        "dark overflow-hidden rounded-2xl bg-ink-raised shadow-[0_24px_48px_-24px_oklch(from_var(--ink)_l_c_h/0.55)] ring-1 ring-sand/12",
         className,
       )}
     >

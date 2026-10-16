@@ -25,7 +25,7 @@ export function FaqAccordion({ items, className }: { items: readonly FaqItem[]; 
             </AccordionPrimitive.Trigger>
           </AccordionPrimitive.Header>
           <AccordionPrimitive.Panel className="faq-panel overflow-hidden">
-            <p className="max-w-[60ch] pr-10 pb-6 text-mist">{item.answer}</p>
+            <p className="max-w-[39.78em] pr-10 pb-6 text-mist">{item.answer}</p>
           </AccordionPrimitive.Panel>
         </AccordionPrimitive.Item>
       ))}

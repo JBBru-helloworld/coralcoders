@@ -1,6 +1,6 @@
 # Coral Coders design system
 
-The tokens live in `src/app/globals.css` and the motion presets in `src/lib/motion.ts`. This file covers how to use them and why they are set the way they are.
+The tokens live in `src/app/globals.css`. This file covers how to use them and why they are set the way they are.
 
 ## Palette: "Reef at dusk"
 
@@ -37,7 +37,7 @@ The tokens live in `src/app/globals.css` and the motion presets in `src/lib/moti
 
 - Bright coral is never used for body text on sand. Use `text-coral-deep` (or `text-link`).
 - Coral buttons carry **ink** labels, never white.
-- No purple, no rainbow gradients, no gradient text. `--gradient-hero` (coral to lagoon, low alpha) is the only gradient and is used in the hero at most.
+- No purple, no rainbow gradients, no gradient text. The only gradient is the coral panel's dark vignette.
 - The sticky header is transparent at the top of the page and fully opaque sand with a hairline border once scrolled. No blur: any translucency lets content ghost through and drops nav contrast over ink sections.
 - No glassmorphism as decoration. Translucency is allowed only where it does a job (for example a sticky nav over scrolling content) and must fall back to solid under `prefers-reduced-transparency`.
 - Light is the default. An ink section is made by adding the `dark` class to that section, which remaps shadcn's semantic variables. It is never set on `<html>`, and there is no theme toggle.
@@ -47,7 +47,9 @@ The tokens live in `src/app/globals.css` and the motion presets in `src/lib/moti
 - **Display and headings:** Instrument Serif (400). Add the italic in layout.tsx only if a design uses it. Size and space create hierarchy, not weight.
 - **Body and UI:** Geist Sans.
 - **Code accents, small labels, measurements:** Geist Mono. Use it for real code or data, never as a "techy" costume.
-- All three are self-hosted at build time through `next/font/google`.
+- All three are self-hosted at build time through `next/font/google`, Latin subset, `display: swap`. Only Geist and Instrument Serif are preloaded; Geist Mono (the code card, below the fold on phones) is not.
+- **No layout shift on swap.** Sans and serif use hand-tuned metric fallbacks in `globals.css` (Arial at `size-adjust` 102.75%, Times New Roman at 83.5%), tuned against the site's own copy so lines wrap the same before and after the web font loads.
+- **Measures are in `em`, not `ch`.** `ch` is the width of "0" in the current font, so a `ch` measure changes width when the font swaps. Convert with the "0" width: Geist 0.663em, Instrument Serif 0.46em (so 52ch of body text is `max-w-[34.48em]`).
 
 Fluid scale (Tailwind utilities `text-display`, `text-h1`, `text-h2`, `text-h3`, `text-lead`, `text-body`, `text-small`, `text-label`), clamped between the 390px and 1440px viewports:
 
@@ -79,8 +81,6 @@ Restraint first: every animation shows state, hierarchy or feedback, or rewards 
 | `ease-in-out` | `cubic-bezier(0.65, 0, 0.35, 1)` |
 | `ease-press` | `cubic-bezier(0.3, 0, 0.2, 1)` (press down) |
 | `ease-spring` | a damped spring (damping 0.85) as CSS `linear()`: 99% at half time, 0.6% overshoot |
-| `spring` (TS) | `{ type: "spring", bounce: 0, duration: 0.3 }` |
-| `springMomentum` (TS) | `{ type: "spring", bounce: 0.2, duration: 0.3 }` |
 
 **Rules**
 
@@ -111,7 +111,7 @@ Restraint first: every animation shows state, hierarchy or feedback, or rewards 
 | Mobile CTA bar | past hero / over #contact | `translate`, `opacity` | 220ms |
 | Hero coral | load | canvas intro and idle current (see below) | 1.6s once, then idle |
 
-**Reduced motion.** Under `prefers-reduced-motion: reduce`, transitions are limited to opacity and colour (150ms), so transforms and clip-paths snap to their end state and state changes still fade. Scroll-driven and entrance keyframes exist only for `no-preference`; the course panel and mobile sheet get opacity-only fades instead. Smooth scrolling is off, the coral canvas never mounts, and `MotionConfig reducedMotion="user"` wraps the app.
+**Reduced motion.** Under `prefers-reduced-motion: reduce`, transitions are limited to opacity and colour (150ms), so transforms and clip-paths snap to their end state and state changes still fade. Scroll-driven and entrance keyframes exist only for `no-preference`; the course panel and mobile sheet get opacity-only fades instead. Smooth scrolling is off, and the coral canvas never mounts. All motion is CSS (no animation library).
 
 ## Hero visual: particle coral
 
@@ -151,7 +151,7 @@ From the `apple-design` skill, the principles this site uses:
 
 1. **Restraint (simplicity, not minimalism).** Every element earns its place. One clear action per section, which here is booking the free lesson. Hierarchy comes from order, spacing and contrast, not decoration. One authored motion moment per page rather than an entrance on every section.
 2. **Typography with size-specific tracking and leading.** Large serif display text gets negative tracking and tight leading. Body text stays near zero tracking with comfortable leading, and small labels get positive tracking. Spacing is in `rem`, so the layout scales with the user's text size.
-3. **Spring motion that is interruptible.** Anything a person touches uses springs (Motion), critically damped by default (`bounce: 0`), so motion starts from the current on-screen value and can be reversed mid-flight. Bounce is reserved for interactions that carry momentum. Only `transform` and `opacity` are animated on hot paths.
+3. **Spring motion that is interruptible.** Anything a person touches uses springs (the CSS `ease-spring` curve), barely damped (0.6% overshoot), so motion starts from the current on-screen value and can be reversed mid-flight. Bounce is reserved for interactions that carry momentum. Only `transform`, `opacity` and `clip-path` are animated on hot paths.
 4. **Instant response.** Press feedback happens on pointer-down (`active:scale-[0.97]` over 100ms). No artificial delays on the input path.
 5. **Spatial consistency.** Things leave the way they came in. Popovers and menus scale from their trigger, not their centre.
 6. **Reduced motion means gentler, not nothing.** Under `prefers-reduced-motion`, slides and springs become short cross-fades or static changes, and overshoot is dropped. Also honour `prefers-reduced-transparency` (solid surfaces) and `prefers-contrast: more`.

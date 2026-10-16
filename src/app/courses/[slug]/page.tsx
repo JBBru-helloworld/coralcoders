@@ -37,6 +37,8 @@ export async function generateMetadata({ params }: CoursePageProps) {
 }
 
 const wrap = "mx-auto w-full max-w-6xl px-5 sm:px-8";
+const crumbLink =
+  "group/link inline-flex items-center rounded-sm transition-colors duration-(--duration-fast) max-md:min-h-11 max-md:min-w-11 pointer-hover:text-ink";
 const splitGrid = "grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20";
 
 export default async function CoursePage({ params }: CoursePageProps) {
@@ -73,17 +75,14 @@ export default async function CoursePage({ params }: CoursePageProps) {
       <nav aria-label="Breadcrumb" className={`${wrap} pt-8`}>
         <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-small text-mist">
           <li>
-            <Link href="/" className="u-link rounded-sm transition-colors duration-(--duration-fast) pointer-hover:text-ink">
-              Home
+            <Link href="/" className={crumbLink}>
+              <span className="u-link">Home</span>
             </Link>
           </li>
           <li aria-hidden="true">/</li>
           <li>
-            <Link
-              href="/#courses"
-              className="u-link rounded-sm transition-colors duration-(--duration-fast) pointer-hover:text-ink"
-            >
-              Courses
+            <Link href="/#courses" className={crumbLink}>
+              <span className="u-link">Courses</span>
             </Link>
           </li>
           <li aria-hidden="true">/</li>
@@ -100,10 +99,10 @@ export default async function CoursePage({ params }: CoursePageProps) {
         className={`${wrap} grid gap-8 pt-10 pb-20 md:pt-14 md:pb-28 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16`}
       >
         <div className="flex flex-col gap-7">
-          <h1 id="course-heading" className="max-w-[20ch] text-h1">
+          <h1 id="course-heading" className="max-w-[9.2em] text-h1 max-sm:max-w-[8.4em]">
             {content.h1}
           </h1>
-          <p className="max-w-[58ch] text-lead text-mist">{content.intro}</p>
+          <p className="max-w-[38.45em] text-lead text-mist">{content.intro}</p>
           <div className="flex flex-wrap gap-3">
             <WhatsAppButton size="lg" course={course} label={hero.primaryCta} />
             <EmailButton size="lg" course={course} label={hero.secondaryCta} />
@@ -149,7 +148,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
                 <span aria-hidden="true" className="font-heading text-h2 leading-none text-coral">
                   {index + 1}
                 </span>
-                <p className="max-w-[30ch] font-heading text-h3 text-sand">{project}</p>
+                <p className="max-w-[13.8em] font-heading text-h3 text-sand">{project}</p>
               </li>
             ))}
           </ol>
@@ -161,7 +160,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
         <div className={`${wrap} grid gap-16 py-20 md:py-28 lg:grid-cols-2 lg:gap-20`}>
           <div className="flex flex-col gap-5">
             <h2 className="text-h2">{coursePageHeadings.whoFor}</h2>
-            <p className="max-w-[48ch] text-lead text-mist">{content.whoFor}</p>
+            <p className="max-w-[31.82em] text-lead text-mist">{content.whoFor}</p>
           </div>
           <div className="flex flex-col gap-5">
             <h2 className="text-h2">{coursePageHeadings.lessons}</h2>
@@ -183,7 +182,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
             {coursePageHeadings.next}
           </h2>
           <div className="reveal flex flex-col gap-8">
-            <p className="max-w-[52ch] text-lead text-mist">{content.next}</p>
+            <p className="max-w-[34.48em] text-lead text-mist">{content.next}</p>
             <ul className="border-t border-mist-line">
               {related.map((item) => (
                 <li key={item.slug} className="border-b border-mist-line">

@@ -12,7 +12,7 @@ import {
 import { cn } from "@/lib/utils";
 
 const detailLink =
-  "rounded-sm text-sand underline decoration-sand/25 underline-offset-4 transition-colors duration-(--duration-fast) pointer-hover:decoration-sand/70";
+  "inline-flex items-center max-md:min-h-11 rounded-sm text-sand underline decoration-sand/25 underline-offset-4 transition-colors duration-(--duration-fast) pointer-hover:decoration-sand/70";
 
 type ContactSectionProps = {
   /** "contact" on the homepage (the mobile CTA bar hides while it is in view). */
@@ -56,7 +56,7 @@ export function ContactSection({ id = "contact", course, compact = false }: Cont
         <h2 id={headingId} className={cn("text-sand", compact ? "text-h2" : "text-h1")}>
           {contactSection.heading}
         </h2>
-        <p className="max-w-[48ch] text-lead text-mist-on-ink">{contactSection.body}</p>
+        <p className="max-w-[31.82em] text-lead text-mist-on-ink">{contactSection.body}</p>
         <div className="flex flex-wrap gap-3">
           <WhatsAppButton size="lg" course={course} label={contactSection.primaryCta} />
           <EmailButton size="lg" course={course} label={contactSection.secondaryCta} />

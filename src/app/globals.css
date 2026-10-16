@@ -1,5 +1,6 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+/* Scan only src for classes: docs and skill files elsewhere in the repo
+   would otherwise add unused utilities. */
+@import "tailwindcss" source("../");
 @import "shadcn/tailwind.css";
 
 /*
@@ -10,6 +11,37 @@
 @custom-variant dark (&:is(.dark *));
 
 /* Hover styles only for devices with a precise pointer; touch gets press feedback. */
+/*
+ * Metric fallbacks for the web fonts, used until they load. size-adjust is
+ * tuned against the site's own copy (every heading, paragraph and list item
+ * on every page, at 360 to 1440px) so lines wrap the same before and after
+ * the swap. Ascent and descent keep next/font's vertical metrics. Measures
+ * use em, not ch, because ch changes with the font. Re-tune if the copy
+ * changes a lot.
+ */
+@font-face {
+  font-family: "Geist Metric Fallback";
+  src: local("Arial"), local("ArialMT"), local("Helvetica");
+  size-adjust: 102.75%;
+  ascent-override: 97.82%;
+  descent-override: 28.71%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Instrument Serif Metric Fallback";
+  src: local("Times New Roman"), local("TimesNewRomanPSMT"), local("Times");
+  size-adjust: 83.5%;
+  ascent-override: 118.56%;
+  descent-override: 37.12%;
+  line-gap-override: 0%;
+}
+
+/* Phones on their side: short and below the desktop layout. */
+@custom-variant phone-landscape {
+  @media (orientation: landscape) and (height < 32rem) and (width < 64rem) {
+    @slot;
+  }
+}
 @custom-variant pointer-hover {
   @media (hover: hover) and (pointer: fine) {
     &:hover {
@@ -38,13 +70,6 @@
   --mist-line: oklch(0.89 0.012 263.1); /* #D7DBE3  hairlines and borders on sand */
   --mist-on-ink: oklch(0.78 0.025 263.1); /* #AFB8C8  muted text on ink (9.18:1) */
 
-  /* The one permitted gradient: hero only, subtle */
-  --gradient-hero: linear-gradient(
-    135deg,
-    oklch(0.708 0.185 30.1 / 0.18),
-    oklch(0.698 0.117 185.5 / 0.14)
-  );
-
   /* shadcn semantic mapping (light, the default) */
   --background: var(--sand);
   --foreground: var(--ink);
@@ -68,7 +93,7 @@
   --radius: 0.75rem;
 
   /* Motion durations. UI feedback 150 to 250ms; entrances 300 to 600ms.
-     Easings are in @theme below; JS springs live in src/lib/motion.ts */
+     Easings are in @theme below. */
   --nav-height: 4rem;
   --mobile-cta-height: 4.5rem;
 
@@ -219,7 +244,7 @@
     outline-offset: 3px;
   }
   ::selection {
-    background-color: oklch(0.708 0.185 30.1 / 0.28);
+    background-color: oklch(from var(--coral) l c h / 0.28);
   }
 }
 
@@ -227,10 +252,18 @@
  * Site chrome
  * ---------------------------------------------------------------------- */
 
-/* Mobile CTA bar is fixed to the bottom; reserve its height so the footer
-   is never covered. */
+/* The viewport covers the whole screen (viewport-fit=cover) so the CTA bar
+   and menu can pad for the home indicator. In landscape, keep content clear
+   of the notch the way Safari's default letterboxing would. */
+html {
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+}
+
+/* Mobile CTA bar is fixed to the bottom; reserve its height inside the
+   (dark) footer so the footer is never covered and no sand strip shows
+   below it on pages without the bar. */
 @media (width < 48rem) {
-  body {
+  .site-footer {
     padding-bottom: calc(var(--mobile-cta-height) + env(safe-area-inset-bottom));
   }
 }
@@ -279,8 +312,9 @@
  * Links, buttons and other interaction feedback
  * ---------------------------------------------------------------------- */
 
-/* Quiet link underline (in the style of Skiper UI's skiper40, re-implemented
-   in CSS): grows from the left on hover, retracts to the right. Fine pointers
+/* Quiet link underline, adapted from Skiper UI's skiper40
+   (https://skiper-ui.com, credited in the footer): grows from the left on
+   hover, retracts to the right. Fine pointers
    only; keyboard focus shows it too. */
 .u-link {
   position: relative;
@@ -399,8 +433,8 @@
   z-index: 1;
   border-radius: inherit;
   pointer-events: none;
-  background: radial-gradient(130% 100% at 50% 40%, transparent 55%, oklch(0.12 0.03 263 / 0.6));
-  box-shadow: inset 0 0 0 1px oklch(0.963 0.010 72.7 / 0.08);
+  background: radial-gradient(130% 100% at 50% 40%, transparent 55%, oklch(from var(--ink) calc(l - 0.07) c h / 0.6));
+  box-shadow: inset 0 0 0 1px oklch(from var(--sand) l c h / 0.08);
 }
 
 /* Closing section: the faint coral echo; black drops out with screen. */
@@ -441,7 +475,7 @@
     }
 
     /* Why Code statement: each word brightens from 40% as the sentence
-       scrolls into reading position (the effect of skiper31, in CSS). 40%
+       scrolls into reading position (an effect like Skiper UI's skiper31, written from scratch in CSS; no Skiper code). 40%
        keeps even the dimmed words above 3:1 on ink. */
     .statement {
       view-timeline: --statement block;
@@ -567,6 +601,7 @@
    35ms apart; on close the whole sheet leaves together, quickly. These rules
    are unlayered, so they override the shadcn Sheet's utility transitions. */
 .menu-sheet[data-side="right"] {
+  padding-right: env(safe-area-inset-right);
   transition:
     translate var(--duration-slow) var(--ease-spring),
     opacity var(--duration-fast) var(--ease-out);

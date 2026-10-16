@@ -50,3 +50,6 @@ next-env.d.ts
 # Original brand and photo files: local only. They are large and the photo
 # carries GPS EXIF data; optimised, metadata-free copies are committed instead.
 /assets/originals/
+
+# QA screenshots and reports (Phase 7)
+/docs/qa/

@@ -5,6 +5,7 @@ import { ctaVariants } from "@/components/cta/cta-variants";
 
 export const metadata: Metadata = {
   title: "Page not found",
+  description: "This page could not be found. Head back to the Coral Coders homepage or message us.",
   robots: { index: false, follow: true },
 };
 
@@ -12,12 +13,12 @@ export default function NotFound() {
   return (
     <section
       aria-labelledby="not-found-heading"
-      className="mx-auto flex min-h-[70vh] w-full max-w-6xl flex-col justify-center gap-6 px-5 py-24 sm:px-8"
+      className="mx-auto flex min-h-[70dvh] w-full max-w-6xl flex-col justify-center gap-6 px-5 py-24 sm:px-8"
     >
-      <h1 id="not-found-heading" className="max-w-[16ch] text-h1">
+      <h1 id="not-found-heading" className="max-w-[7.36em] text-h1">
         This page has drifted off the reef
       </h1>
-      <p className="max-w-[52ch] text-lead text-mist">
+      <p className="max-w-[34.48em] text-lead text-mist">
         The link may be old or mistyped. Head back to the homepage, or message us
         and we will point you in the right direction.
       </p>

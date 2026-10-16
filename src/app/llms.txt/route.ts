@@ -8,6 +8,7 @@ import {
   description,
   lessonLanguageNote,
   pricingNote,
+  privacyPath,
   siteName,
 } from "@/lib/site";
 
@@ -45,6 +46,10 @@ ${courseLines("adults")}
 - Email: ${contact.email}
 - Instagram: ${contact.instagramHandle} (${contact.instagramUrl})
 - Website: ${absoluteUrl("/")}
+
+## Policies
+
+- [Privacy notice](${absoluteUrl(privacyPath)}): no forms, cookies or trackers; contact details are used only to reply, arrange lessons and send progress updates.
 `;
 
   return new Response(body, {

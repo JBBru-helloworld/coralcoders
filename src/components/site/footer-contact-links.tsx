@@ -23,13 +23,13 @@ export function FooterContactLinks({ linkClass }: { linkClass: string }) {
           className={linkClass}
         >
           <span className="sr-only">WhatsApp </span>
-          {contact.whatsappDisplay}
+          <span className="u-link">{contact.whatsappDisplay}</span>
           <span className="sr-only"> (opens in a new tab)</span>
         </a>
       </li>
       <li>
         <a href={mailtoLink(emailSubjectFor(course))} className={`${linkClass} [overflow-wrap:anywhere]`}>
-          {contact.email}
+          <span className="u-link">{contact.email}</span>
         </a>
       </li>
     </>

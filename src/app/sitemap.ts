@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { absoluteUrl, coursePath, courses } from "@/lib/site";
+import { absoluteUrl, coursePath, courses, privacyPath } from "@/lib/site";
 
 export const dynamic = "force-static";
 
@@ -14,5 +14,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })),
+    { url: absoluteUrl(privacyPath), lastModified, changeFrequency: "yearly", priority: 0.3 },
   ];
 }

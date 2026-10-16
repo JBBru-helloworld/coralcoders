@@ -230,6 +230,8 @@ export function coursePath(course: Course): string {
   return `/courses/${course.slug}/`;
 }
 
+export const privacyPath = "/privacy/";
+
 /** The course a pathname belongs to ("/courses/sql/" -> SQL), if any. */
 export function courseForPath(pathname: string): Course | undefined {
   const match = pathname.match(/^\/courses\/([^/]+)\/?$/);
