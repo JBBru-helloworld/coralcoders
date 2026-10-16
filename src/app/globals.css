@@ -11,7 +11,7 @@
 
 /* ------------------------------------------------------------------------
  * Palette: "Reef at dusk"
- * OKLCH values, original hex in comments. See docs/DESIGN.md for usage rules.
+ * OKLCH values, original hex in comments. See DESIGN.md for usage rules.
  * ---------------------------------------------------------------------- */
 :root {
   --sand: oklch(0.963 0.010 72.7); /* #F7F2EC  main light background */
@@ -60,6 +60,9 @@
 
   /* Motion durations. All UI transitions 300ms or under. Easings are in @theme
      below; springs live in src/lib/motion.ts */
+  --nav-height: 4rem;
+  --mobile-cta-height: 4.5rem;
+
   --duration-instant: 100ms;
   --duration-fast: 160ms;
   --duration-base: 220ms;
@@ -203,6 +206,67 @@
   ::selection {
     background-color: oklch(0.708 0.185 30.1 / 0.28);
   }
+}
+
+/* ------------------------------------------------------------------------
+ * Site chrome
+ * ---------------------------------------------------------------------- */
+
+/* Mobile CTA bar is fixed to the bottom; reserve its height so the footer
+   is never covered. */
+@media (width < 48rem) {
+  body {
+    padding-bottom: calc(var(--mobile-cta-height) + env(safe-area-inset-bottom));
+  }
+}
+
+/* Transparent at the top; sand with a light blur and hairline once scrolled.
+   Opacity stays at 0.96 so mist nav links keep 4.5:1 even over ink sections. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: var(--nav-height);
+  border-bottom: 1px solid transparent;
+  transition-property: background-color, border-color, backdrop-filter;
+  transition-duration: var(--duration-base);
+  transition-timing-function: var(--ease-out);
+}
+.site-header[data-scrolled="true"] {
+  background-color: oklch(0.963 0.010 72.7 / 0.96);
+  border-bottom-color: var(--mist-line);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .site-header[data-scrolled="true"] {
+    background-color: var(--sand);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .site-header[data-scrolled="true"] {
+    background-color: var(--sand);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* Active section: a short coral hairline under the link, nothing heavier. */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.3rem;
+  height: 1.5px;
+  border-radius: 1px;
+  background: var(--coral);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-base) var(--ease-out);
+}
+.nav-link[aria-current="true"]::after {
+  transform: scaleX(1);
 }
 
 @media (prefers-reduced-motion: no-preference) {

@@ -38,12 +38,13 @@ The tokens live in `src/app/globals.css` and the motion presets in `src/lib/moti
 - Bright coral is never used for body text on sand. Use `text-coral-deep` (or `text-link`).
 - Coral buttons carry **ink** labels, never white.
 - No purple, no rainbow gradients, no gradient text. `--gradient-hero` (coral to lagoon, low alpha) is the only gradient and is used in the hero at most.
+- The sticky header is the one translucent surface: sand at 0.96 opacity with a 14px blur once scrolled. Do not lower the opacity; at 0.82 the mist nav links fall to 3.38:1 over ink sections.
 - No glassmorphism as decoration. Translucency is allowed only where it does a job (for example a sticky nav over scrolling content) and must fall back to solid under `prefers-reduced-transparency`.
 - Light is the default. An ink section is made by adding the `dark` class to that section, which remaps shadcn's semantic variables. It is never set on `<html>`, and there is no theme toggle.
 
 ## Typography
 
-- **Display and headings:** Instrument Serif (400, with italic). Size and space create hierarchy, not weight.
+- **Display and headings:** Instrument Serif (400). Add the italic in layout.tsx only if a design uses it. Size and space create hierarchy, not weight.
 - **Body and UI:** Geist Sans.
 - **Code accents, small labels, measurements:** Geist Mono. Use it for real code or data, never as a "techy" costume.
 - All three are self-hosted at build time through `next/font/google`.

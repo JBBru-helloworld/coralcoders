@@ -42,7 +42,7 @@ One-to-one, online, with a single named tutor, rather than group classes or a se
 - Copy: UK English (colour, organise, programme, enrol). No em dashes. Not emoji-heavy.
 - Feeling the owner made binding: elegant, calm, modern and trustworthy, with a warm, playful edge. A premium independent studio, not a generic edtech template or a children's cartoon site.
 - References in spirit: Apple product pages (restraint, typography, motion), Linear and Vercel marketing sites (precision), coral reef and island light (warmth).
-- Fixed palette, type and motion rules: see `docs/DESIGN.md`.
+- Fixed palette, type and motion rules: see `DESIGN.md`.
 - Avoid: purple gradients, glassmorphism everywhere, stock "kids on laptops" imagery, generic three-column icon feature grids, Inter.
 
 ## Evidence on Hand

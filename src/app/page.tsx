@@ -1,61 +1,84 @@
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { siteName, whatsappLink } from "@/lib/site";
+import Link from "next/link";
+import { EmailButton } from "@/components/cta/email-button";
+import { WhatsAppButton } from "@/components/cta/whatsapp-button";
+import { JsonLd } from "@/components/json-ld";
+import { SectionShell } from "@/components/site/section-shell";
+import { pageMetadata } from "@/lib/metadata";
+import { organizationSchema, websiteSchema } from "@/lib/schema";
+import {
+  coursePath,
+  courses,
+  description,
+  homeTitle,
+  pricingNote,
+  tagline,
+} from "@/lib/site";
 
-// Temporary Phase 1 shell: proves fonts, tokens and the primary CTA.
-const swatches = [
-  { token: "--sand", hex: "#F7F2EC", className: "bg-sand" },
-  { token: "--ink", hex: "#0B1426", className: "bg-ink" },
-  { token: "--coral", hex: "#FF6B57", className: "bg-coral" },
-  { token: "--coral-deep", hex: "#C2412F", className: "bg-coral-deep" },
-  { token: "--lagoon", hex: "#1FB5A8", className: "bg-lagoon" },
-  { token: "--mist", hex: "#60697B", className: "bg-mist" },
-];
+export const metadata = pageMetadata({
+  title: homeTitle,
+  description,
+  path: "/",
+  absoluteTitle: true,
+});
+
+const placeholder = "Placeholder. Copy for this section arrives in a later phase.";
 
 export default function Home() {
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center gap-16 px-6 py-24 sm:px-10">
-      <section className="flex max-w-2xl flex-col gap-6">
-        <h1 className="text-display">{siteName}</h1>
-        <p className="max-w-[60ch] text-lead text-mist">
-          Online one-to-one coding lessons for children and adults in Mauritius
-          and South Africa. Scratch, Python, SQL and AI, taught at your pace.
-          Your first lesson is free.
-        </p>
-        <div>
-          <a
-            href={whatsappLink()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              buttonVariants({ size: "lg" }),
-              "h-12 rounded-full px-6 text-base transition-[background-color,transform] duration-(--duration-fast) ease-out hover:bg-coral/85 active:scale-[0.97]",
-            )}
-          >
-            Book a free lesson
-          </a>
+    <>
+      <JsonLd data={[organizationSchema(), websiteSchema()]} />
+
+      {/* Hero: placeholder layout until Phase 3. */}
+      <section
+        data-hero
+        aria-labelledby="hero-heading"
+        className="mx-auto flex min-h-[calc(88svh-var(--nav-height))] w-full max-w-6xl flex-col justify-center gap-7 px-5 py-20 sm:px-8"
+      >
+        <h1 id="hero-heading" className="max-w-[14ch] text-display">
+          {tagline}
+        </h1>
+        <p className="max-w-[56ch] text-lead text-mist">{description}</p>
+        <div className="flex flex-wrap gap-3">
+          <WhatsAppButton size="lg" />
+          <EmailButton size="lg" />
         </div>
       </section>
 
-      <ul
-        aria-label="Palette tokens"
-        className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-6"
+      <SectionShell id="why-code" title="Why code" note={placeholder} />
+
+      <SectionShell id="courses" title="Courses" note={placeholder}>
+        <ul className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+          {courses.map((course) => (
+            <li key={course.slug}>
+              <Link
+                href={coursePath(course)}
+                className="rounded-sm text-link underline decoration-current/30 underline-offset-4 transition-colors duration-(--duration-fast) hover:decoration-current"
+              >
+                {course.title}
+              </Link>{" "}
+              <span className="text-small text-mist">{course.ageLabel}</span>
+            </li>
+          ))}
+        </ul>
+      </SectionShell>
+
+      <SectionShell id="how-it-works" title="How it works" note={placeholder} />
+
+      <SectionShell id="tutor" title="Your tutor" note={placeholder} tone="ink" />
+
+      <SectionShell id="faq" title="Questions and answers" note={placeholder} />
+
+      <SectionShell
+        id="contact"
+        title="Book a free lesson"
+        note={pricingNote}
+        className="border-t border-mist-line"
       >
-        {swatches.map((swatch) => (
-          <li key={swatch.token} className="flex flex-col gap-2">
-            <div
-              className={cn(
-                "aspect-[4/3] rounded-lg ring-1 ring-ink/10 ring-inset",
-                swatch.className,
-              )}
-            />
-            <div className="flex flex-col font-mono text-label normal-case tracking-normal">
-              <span>{swatch.token}</span>
-              <span className="text-mist">{swatch.hex}</span>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </main>
+        <div className="flex flex-wrap gap-3">
+          <WhatsAppButton size="lg" />
+          <EmailButton size="lg" />
+        </div>
+      </SectionShell>
+    </>
   );
 }
