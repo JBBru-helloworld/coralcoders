@@ -1,0 +1,227 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/*
+ * `.dark` is a scoped ink surface, applied to individual sections only.
+ * It is never set on <html>: there is no site-wide dark mode or theme toggle.
+ * shadcn components inside an ink section pick up their `dark:` styles.
+ */
+@custom-variant dark (&:is(.dark *));
+
+/* ------------------------------------------------------------------------
+ * Palette: "Reef at dusk"
+ * OKLCH values, original hex in comments. See docs/DESIGN.md for usage rules.
+ * ---------------------------------------------------------------------- */
+:root {
+  --sand: oklch(0.963 0.010 72.7); /* #F7F2EC  main light background */
+  --sand-raised: oklch(0.985 0.006 72.7); /* #FDFAF6  cards on sand */
+  --sand-sunk: oklch(0.945 0.013 72.7); /* ~#F1EBE3  quiet fills, muted panels */
+  --ink: oklch(0.193 0.039 263.1); /* #0B1426  body text, dark sections */
+  --ink-raised: oklch(0.245 0.040 263.1); /* ~#18213A  cards on ink */
+  --coral: oklch(0.708 0.185 30.1); /* #FF6B57  buttons, large headings, highlights only */
+  --coral-deep: oklch(0.556 0.168 30.9); /* #C2412F  coral text and links on light */
+  --lagoon: oklch(0.698 0.117 185.5); /* #1FB5A8  sparing accent, focus on ink */
+  --lagoon-deep: oklch(0.58 0.1 185.5); /* #0C8D83  focus rings on light (3.66:1 on sand) */
+
+  /* Mist: derived from ink's hue at low chroma */
+  --mist: oklch(0.52 0.03 263.1); /* #60697B  muted text on sand (4.95:1) */
+  --mist-line: oklch(0.89 0.012 263.1); /* #D7DBE3  hairlines and borders on sand */
+  --mist-on-ink: oklch(0.78 0.025 263.1); /* #AFB8C8  muted text on ink (9.18:1) */
+
+  /* The one permitted gradient: hero only, subtle */
+  --gradient-hero: linear-gradient(
+    135deg,
+    oklch(0.708 0.185 30.1 / 0.18),
+    oklch(0.698 0.117 185.5 / 0.14)
+  );
+
+  /* shadcn semantic mapping (light, the default) */
+  --background: var(--sand);
+  --foreground: var(--ink);
+  --card: var(--sand-raised);
+  --card-foreground: var(--ink);
+  --popover: var(--sand-raised);
+  --popover-foreground: var(--ink);
+  --primary: var(--coral);
+  --primary-foreground: var(--ink); /* ink on coral 6.56:1; sand on coral fails at 2.52:1 */
+  --secondary: var(--sand-sunk);
+  --secondary-foreground: var(--ink);
+  --muted: var(--sand-sunk);
+  --muted-foreground: var(--mist);
+  --accent: var(--sand-sunk);
+  --accent-foreground: var(--ink);
+  --destructive: var(--coral-deep);
+  --border: var(--mist-line);
+  --input: var(--mist-line);
+  --ring: var(--lagoon-deep);
+  --link: var(--coral-deep);
+  --radius: 0.75rem;
+
+  /* Motion durations. All UI transitions 300ms or under. Easings are in @theme
+     below; springs live in src/lib/motion.ts */
+  --duration-instant: 100ms;
+  --duration-fast: 160ms;
+  --duration-base: 220ms;
+  --duration-slow: 300ms;
+}
+
+.dark {
+  --background: var(--ink);
+  --foreground: var(--sand);
+  --card: var(--ink-raised);
+  --card-foreground: var(--sand);
+  --popover: var(--ink-raised);
+  --popover-foreground: var(--sand);
+  --primary: var(--coral);
+  --primary-foreground: var(--ink);
+  --secondary: var(--ink-raised);
+  --secondary-foreground: var(--sand);
+  --muted: var(--ink-raised);
+  --muted-foreground: var(--mist-on-ink);
+  --accent: var(--ink-raised);
+  --accent-foreground: var(--sand);
+  --destructive: var(--coral);
+  --border: oklch(0.963 0.010 72.7 / 12%);
+  --input: oklch(0.963 0.010 72.7 / 16%);
+  --ring: var(--lagoon);
+  --link: var(--coral); /* coral on ink 6.56:1 */
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+@theme inline {
+  /* Palette as utilities: bg-sand, text-ink, text-coral-deep, ... */
+  --color-sand: var(--sand);
+  --color-sand-raised: var(--sand-raised);
+  --color-sand-sunk: var(--sand-sunk);
+  --color-ink: var(--ink);
+  --color-ink-raised: var(--ink-raised);
+  --color-coral: var(--coral);
+  --color-coral-deep: var(--coral-deep);
+  --color-lagoon: var(--lagoon);
+  --color-lagoon-deep: var(--lagoon-deep);
+  --color-mist: var(--mist);
+  --color-mist-line: var(--mist-line);
+  --color-mist-on-ink: var(--mist-on-ink);
+
+  /* shadcn semantic colours */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-link: var(--link);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Typography. Font variables are set by next/font in layout.tsx */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-heading: var(--font-serif);
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /*
+   * Fluid type scale, 390px to 1440px viewports.
+   * Serif display sizes get negative tracking and tight leading;
+   * small sizes get slightly positive tracking.
+   */
+  --text-display: clamp(3rem, 1.9rem + 4.5vw, 6rem);
+  --text-display--line-height: 0.98;
+  --text-display--letter-spacing: -0.025em;
+  --text-h1: clamp(2.5rem, 1.85rem + 2.65vw, 4.25rem);
+  --text-h1--line-height: 1.02;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h2: clamp(2rem, 1.6rem + 1.6vw, 3rem);
+  --text-h2--line-height: 1.08;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h3: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
+  --text-h3--line-height: 1.15;
+  --text-h3--letter-spacing: -0.01em;
+  --text-lead: clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem);
+  --text-lead--line-height: 1.55;
+  --text-lead--letter-spacing: -0.005em;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+  --text-small--letter-spacing: 0.005em;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.08em;
+}
+
+/* Easing tokens as utilities: ease-out, ease-in-out, ease-press */
+@theme {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-press: cubic-bezier(0.3, 0, 0.2, 1);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring;
+  }
+  html {
+    @apply font-sans;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-background text-body text-foreground;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-heading font-normal text-balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+  ::selection {
+    background-color: oklch(0.708 0.185 30.1 / 0.28);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/*
+ * Reduced motion: no movement, no springs, no parallax.
+ * Opacity and colour changes may still fade briefly (handled per component).
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
