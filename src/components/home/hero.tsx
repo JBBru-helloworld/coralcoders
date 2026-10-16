@@ -1,6 +1,7 @@
 import { EmailButton } from "@/components/cta/email-button";
 import { WhatsAppButton } from "@/components/cta/whatsapp-button";
 import { coralProgram, hero } from "@/content/home";
+import { TrustLine } from "@/components/site/trust-line";
 import { CodeCard } from "./code-card";
 import { HeroCoral } from "./hero-coral";
 
@@ -21,14 +22,7 @@ export function Hero() {
             <WhatsAppButton size="lg" label={hero.primaryCta} />
             <EmailButton size="lg" label={hero.secondaryCta} />
           </div>
-          <ul className="flex flex-wrap gap-x-5 gap-y-2 text-small text-mist">
-            {hero.trust.map((item) => (
-              <li key={item} className="flex items-center gap-2">
-                <span aria-hidden="true" className="size-1.5 rounded-full bg-lagoon-deep" />
-                {item}
-              </li>
-            ))}
-          </ul>
+          <TrustLine />
         </div>
 
         {/* Mobile and tablet: panel, then the code card below it. Desktop: the

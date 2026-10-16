@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useNavState } from "@/components/site/nav-state";
-import { usePastHero } from "@/components/site/use-scroll-state";
+import { useElementInView, usePastHero } from "@/components/site/use-scroll-state";
 import { courseForPath } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { EmailButton } from "./email-button";
@@ -10,15 +10,17 @@ import { WhatsAppButton } from "./whatsapp-button";
 
 /**
  * Slim contact bar fixed to the bottom on mobile. Appears once the hero has
- * scrolled away and hides while the mobile menu is open. The body reserves
+ * scrolled away. Hides while the mobile menu is open, and while the homepage
+ * #contact section (which offers the same two actions) is on screen. The body reserves
  * matching bottom padding on mobile so the footer is never covered.
  */
 export function MobileCtaBar() {
   const pathname = usePathname();
   const pastHero = usePastHero(pathname);
   const course = courseForPath(pathname);
+  const contactInView = useElementInView("contact", pathname);
   const { menuOpen } = useNavState();
-  const visible = pastHero && !menuOpen;
+  const visible = pastHero && !menuOpen && !contactInView;
 
   return (
     <div

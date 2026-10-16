@@ -90,16 +90,29 @@ export function websiteSchema(): JsonLdNode {
   };
 }
 
-export function courseSchema(course: Course): JsonLdNode {
+export type CourseSchemaInput = {
+  h1: string;
+  intro: string;
+  learn: readonly string[];
+  whoFor: string;
+};
+
+/** First sentence, for short fields such as coursePrerequisites. */
+const firstSentence = (text: string) => text.match(/^.*?[.!?](?=\s|$)/)?.[0] ?? text;
+
+export function courseSchema(course: Course, content: CourseSchemaInput): JsonLdNode {
   return {
     "@type": "Course",
     "@id": ids.course(course),
-    name: course.title,
-    description: course.shortDescription,
+    name: content.h1,
+    description: content.intro,
     url: absoluteUrl(coursePath(course)),
     provider: ref(ids.organization),
     inLanguage: "en",
-    typicalAgeRange: `${course.minAge}-`,
+    educationalLevel: "Beginner",
+    teaches: content.learn,
+    coursePrerequisites: firstSentence(content.whoFor),
+    ...(course.audience === "kids" && { typicalAgeRange: `${course.minAge}-` }),
     audience: {
       "@type": "EducationalAudience",
       educationalRole: "student",
@@ -109,6 +122,7 @@ export function courseSchema(course: Course): JsonLdNode {
     hasCourseInstance: {
       "@type": "CourseInstance",
       courseMode: "online",
+      courseWorkload: "PT1H",
       inLanguage: "en",
       instructor: ref(ids.person),
     },
@@ -129,10 +143,10 @@ export function breadcrumbSchema(items: { name: string; path: string }[]): JsonL
 
 export type FaqItem = { question: string; answer: string };
 
-export function faqPageSchema(items: readonly FaqItem[]): JsonLdNode {
+export function faqPageSchema(items: readonly FaqItem[], path = "/"): JsonLdNode {
   return {
     "@type": "FAQPage",
-    "@id": `${siteUrl}/#faq`,
+    "@id": `${absoluteUrl(path)}#faq`,
     mainEntity: items.map((item) => ({
       "@type": "Question",
       name: item.question,

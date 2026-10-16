@@ -1,14 +1,6 @@
-"use client";
-
-import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion";
-import { ChevronDown } from "lucide-react";
+import { FaqAccordion } from "@/components/site/faq-accordion";
 import { faqSection } from "@/content/home";
 
-/**
- * Collapsed answers stay in the HTML (hiddenUntilFound), so search engines
- * read every answer and find-in-page can open them. The FAQPage JSON-LD is
- * built from the same faqSection data.
- */
 export function FaqSection() {
   return (
     <section
@@ -20,29 +12,7 @@ export function FaqSection() {
         <h2 id="faq-heading" className="reveal max-w-[12ch] text-h1">
           {faqSection.heading}
         </h2>
-
-        <AccordionPrimitive.Root hiddenUntilFound className="reveal border-t border-mist-line">
-          {faqSection.items.map((item) => (
-            <AccordionPrimitive.Item
-              key={item.question}
-              value={item.question}
-              className="border-b border-mist-line"
-            >
-              <AccordionPrimitive.Header className="m-0">
-                <AccordionPrimitive.Trigger className="group flex w-full items-start justify-between gap-6 rounded-md py-5 text-left text-lead font-medium text-ink transition-colors duration-(--duration-fast) hover:text-coral-deep">
-                  {item.question}
-                  <ChevronDown
-                    aria-hidden="true"
-                    className="mt-1 size-5 shrink-0 text-mist transition-transform duration-(--duration-base) ease-out group-aria-expanded:rotate-180"
-                  />
-                </AccordionPrimitive.Trigger>
-              </AccordionPrimitive.Header>
-              <AccordionPrimitive.Panel className="faq-panel overflow-hidden">
-                <p className="max-w-[60ch] pr-10 pb-6 text-mist">{item.answer}</p>
-              </AccordionPrimitive.Panel>
-            </AccordionPrimitive.Item>
-          ))}
-        </AccordionPrimitive.Root>
+        <FaqAccordion items={faqSection.items} className="reveal" />
       </div>
     </section>
   );

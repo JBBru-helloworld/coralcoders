@@ -67,3 +67,20 @@ export function usePastHero(pathname: string): boolean {
 
   return state.pathname === pathname && state.pastHero;
 }
+
+/** True while the element with this id is at least partly on screen. */
+export function useElementInView(id: string, pathname: string): boolean {
+  const [state, setState] = useState({ pathname, inView: false });
+
+  useEffect(() => {
+    const element = document.getElementById(id);
+    if (!element) return;
+    const observer = new IntersectionObserver(([entry]) =>
+      setState({ pathname, inView: entry.isIntersecting }),
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [id, pathname]);
+
+  return state.pathname === pathname && state.inView;
+}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FooterContactLinks } from "./footer-contact-links";
 import { Wordmark } from "./wordmark";
 import {
   contact,
@@ -6,11 +7,9 @@ import {
   courses,
   footerDescription,
   lessonLanguageNote,
-  mailtoLink,
   navSections,
   pricingNote,
   siteName,
-  whatsappLink,
 } from "@/lib/site";
 
 const linkClass =
@@ -53,23 +52,7 @@ export function SiteFooter() {
           </nav>
 
           <FooterColumn title="Contact">
-            <li>
-              <a
-                href={whatsappLink()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={linkClass}
-              >
-                <span className="sr-only">WhatsApp </span>
-                {contact.whatsappDisplay}
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
-            </li>
-            <li>
-              <a href={mailtoLink()} className={`${linkClass} [overflow-wrap:anywhere]`}>
-                {contact.email}
-              </a>
-            </li>
+            <FooterContactLinks linkClass={linkClass} />
             <li>
               <a
                 href={contact.instagramUrl}

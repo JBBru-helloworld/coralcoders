@@ -13,8 +13,10 @@ export type Course = {
   shortTitle: string;
   /** Large serif label on the homepage: the age for kids, a monogram for adults. */
   marker: string;
-  /** Page title before the " | Coral Coders" suffix. Keep under ~45 chars. */
+  /** Page title before the " | Coral Coders" suffix. Keep under 45 chars. */
   metaTitle: string;
+  /** Meta description: the main search phrase, under 155 chars. */
+  metaDescription: string;
   audience: Audience;
   ageLabel: string;
   /** Youngest suggested age, used for schema.org typicalAgeRange. */
@@ -139,7 +141,9 @@ export const courses: Course[] = [
     title: "Scratch",
     shortTitle: "Scratch",
     marker: "6+",
-    metaTitle: "Scratch Coding Lessons for Kids",
+    metaTitle: "Scratch Coding Lessons for Kids Online",
+    metaDescription:
+      "Online 1:1 Scratch lessons for kids aged 6+ in Mauritius and South Africa. Animations, games and real coding ideas. Your first lesson is free.",
     audience: "kids",
     ageLabel: "Ages 6+",
     minAge: 6,
@@ -151,7 +155,9 @@ export const courses: Course[] = [
     title: "Python for Kids",
     shortTitle: "Python",
     marker: "9+",
-    metaTitle: "Python Lessons for Kids",
+    metaTitle: "Python Lessons for Kids Online, Ages 9+",
+    metaDescription:
+      "Online 1:1 Python coding lessons for kids aged 9+ in Mauritius and South Africa. Games, quizzes and real programs. Your first lesson is free.",
     audience: "kids",
     ageLabel: "Ages 9+",
     minAge: 9,
@@ -163,7 +169,9 @@ export const courses: Course[] = [
     title: "AI and Machine Learning",
     shortTitle: "AI and Machine Learning",
     marker: "12+",
-    metaTitle: "AI and Machine Learning for Teens",
+    metaTitle: "AI and Machine Learning Lessons for Teens",
+    metaDescription:
+      "Online 1:1 AI and machine learning lessons for teens aged 12+ in Mauritius and South Africa, with real projects in Python. First lesson free.",
     audience: "kids",
     ageLabel: "Ages 12+",
     minAge: 12,
@@ -175,7 +183,9 @@ export const courses: Course[] = [
     title: "Python for Adults",
     shortTitle: "Python",
     marker: "Py",
-    metaTitle: "Python Lessons for Adults",
+    metaTitle: "Python Lessons for Adults Online",
+    metaDescription:
+      "Learn Python online with a 1:1 tutor: automation, data analysis and pandas, for adults and students in Mauritius and South Africa. First lesson free.",
     audience: "adults",
     ageLabel: "Professionals and university students",
     minAge: 18,
@@ -187,7 +197,9 @@ export const courses: Course[] = [
     title: "SQL",
     shortTitle: "SQL",
     marker: "SQL",
-    metaTitle: "SQL Lessons for Adults",
+    metaTitle: "SQL Tutor Online: Lessons for Beginners",
+    metaDescription:
+      "Learn SQL online with a 1:1 tutor: queries, joins and reporting for beginners and professionals in Mauritius and South Africa. First lesson free.",
     audience: "adults",
     ageLabel: "Professionals and university students",
     minAge: 18,
@@ -199,7 +211,9 @@ export const courses: Course[] = [
     title: "AI, Machine Learning and Prompt Engineering",
     shortTitle: "AI, Machine Learning and Prompt Engineering",
     marker: "AI",
-    metaTitle: "AI and Prompt Engineering for Adults",
+    metaTitle: "AI and Prompt Engineering Lessons Online",
+    metaDescription:
+      "Online 1:1 lessons in AI, machine learning and prompt engineering for professionals and students in Mauritius and South Africa. First lesson free.",
     audience: "adults",
     ageLabel: "Professionals and university students",
     minAge: 18,
@@ -220,18 +234,6 @@ export function coursePath(course: Course): string {
 export function courseForPath(pathname: string): Course | undefined {
   const match = pathname.match(/^\/courses\/([^/]+)\/?$/);
   return match ? getCourse(match[1]) : undefined;
-}
-
-/**
- * Meta description for a course page: kept under 155 characters, so it is
- * generated rather than reusing the longer shortDescription.
- */
-export function courseMetaDescription(course: Course): string {
-  const who =
-    course.audience === "kids"
-      ? `children, ${course.ageLabel.toLowerCase()},`
-      : "adults and students";
-  return `Online 1:1 ${course.title} lessons for ${who} in Mauritius and South Africa. Your first lesson is free.`;
 }
 
 export const pricingNote =
