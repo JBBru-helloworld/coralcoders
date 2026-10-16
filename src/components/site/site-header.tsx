@@ -4,8 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { WhatsAppButton } from "@/components/cta/whatsapp-button";
 import { cn } from "@/lib/utils";
-import { courseForPath, navSections, siteName } from "@/lib/site";
+import { courseForPath, navSections } from "@/lib/site";
 import { MobileMenu } from "./mobile-menu";
+import { Wordmark } from "./wordmark";
 import { useActiveSection, useScrolledPast } from "./use-scroll-state";
 
 const sectionIds = navSections.map((section) => section.id);
@@ -20,11 +21,8 @@ export function SiteHeader() {
   return (
     <header className="site-header" data-scrolled={scrolled}>
       <div className="mx-auto flex h-full w-full max-w-6xl items-center justify-between gap-6 px-5 sm:px-8">
-        <Link
-          href="/"
-          className="-mx-1 rounded-md px-1 font-heading text-[1.625rem] leading-none tracking-[-0.01em] whitespace-nowrap text-ink"
-        >
-          {siteName}
+        <Link href="/" className="-mx-1 rounded-md px-1 text-ink">
+          <Wordmark />
         </Link>
 
         <nav aria-label="Main" className="hidden lg:block">

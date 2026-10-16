@@ -25,7 +25,9 @@ export function WhatsAppButton({
     >
       <MessageCircle aria-hidden="true" />
       {label}
-      <span className="sr-only"> on WhatsApp (opens in a new tab)</span>
+      <span className="sr-only">
+        {label.includes("WhatsApp") ? " (opens in a new tab)" : " on WhatsApp (opens in a new tab)"}
+      </span>
     </a>
   );
 }

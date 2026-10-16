@@ -47,9 +47,10 @@ One-to-one, online, with a single named tutor, rather than group classes or a se
 
 ## Evidence on Hand
 
-- Logo: owner is supplying `public/brand/logo.svg` (or `logo.png`) and optionally `logo-mark.svg`.
-- Tutor portrait: owner is supplying `public/images/tutor/joshua-bonham.jpg`.
-- No testimonials, reviews, learner numbers, results or credentials have been supplied. Do not invent any.
+- Logo: a watercolour coral mark only, no wordmark (`assets/originals/brand/logo.svg`, local only). Always shown beside the serif "Coral Coders" wordmark. See `docs/ASSETS.md`.
+- Tutor: Joshua Bonham, founder and lead tutor. Photo, bio, credentials and links are in `src/lib/site.ts` (owner-supplied, final).
+- FAQ answers (lesson length, free first lesson, rescheduling, monthly progress updates) are owner-supplied, final, in `src/content/home.ts`.
+- No testimonials, reviews, learner numbers beyond those in the tutor credentials, or results have been supplied. Do not invent any.
 
 ## Product Principles
 

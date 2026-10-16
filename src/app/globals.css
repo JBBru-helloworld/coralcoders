@@ -308,6 +308,22 @@
   box-shadow: inset 0 0 0 1px oklch(0.963 0.010 72.7 / 0.08);
 }
 
+/* Closing section: the faint coral echo; black drops out with screen. */
+.contact-echo {
+  mix-blend-mode: screen;
+  opacity: 0.45;
+}
+
+/* FAQ answers open and close by height (Base UI sets the variable). */
+.faq-panel {
+  height: var(--accordion-panel-height);
+  transition: height var(--duration-base) var(--ease-out);
+}
+.faq-panel[data-starting-style],
+.faq-panel[data-ending-style] {
+  height: 0;
+}
+
 /* Section entrances: a short fade-up driven by scroll position. No JS; where
    scroll timelines are unsupported, content simply appears. */
 @supports (animation-timeline: view()) {

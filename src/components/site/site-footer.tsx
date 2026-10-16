@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Wordmark } from "./wordmark";
 import {
   contact,
   coursePath,
@@ -21,13 +22,10 @@ export function SiteFooter() {
   return (
     <footer className="dark">
       <div className="mx-auto w-full max-w-6xl px-5 pt-20 pb-10 sm:px-8">
-        <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1.2fr_1.2fr] md:gap-10">
+        <div className="grid gap-12 sm:grid-cols-2 sm:gap-10 lg:grid-cols-[1.4fr_1fr_1.2fr_1.2fr]">
           <div className="flex max-w-xs flex-col gap-4">
-            <Link
-              href="/"
-              className="-mx-1 self-start rounded-md px-1 font-heading text-[2rem] leading-none tracking-[-0.01em] text-sand"
-            >
-              {siteName}
+            <Link href="/" className="-mx-1 self-start rounded-md px-1 text-sand">
+              <Wordmark size="lg" />
             </Link>
             <p className="text-small text-mist-on-ink">{footerDescription}</p>
           </div>
@@ -68,7 +66,7 @@ export function SiteFooter() {
               </a>
             </li>
             <li>
-              <a href={mailtoLink()} className={`${linkClass} break-all`}>
+              <a href={mailtoLink()} className={`${linkClass} [overflow-wrap:anywhere]`}>
                 {contact.email}
               </a>
             </li>

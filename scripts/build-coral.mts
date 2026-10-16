@@ -71,6 +71,33 @@ async function render(name: CoralVariantName) {
   console.log(`coral: ${name} ${width}x${height}, ${particles.count} particles, 4 tiles, ${(total / 1024).toFixed(1)} KB`);
 }
 
+/**
+ * A small, faint copy of the mobile coral on black for the closing section.
+ * Shown with mix-blend-mode: screen, so the black drops out on any ink tone.
+ */
+async function renderEcho() {
+  const { width, height } = coralVariants.mobile;
+  const pixels = new Float32Array(width * height * 3);
+  const particles = generateCoral("mobile");
+  for (let i = 0; i < particles.count; i++) {
+    const x = Math.round(particles.x[i]);
+    const y = Math.round(particles.y[i]);
+    if (x < 0 || y < 0 || x >= width || y >= height) continue;
+    const [red, green, blue] = coralPalette[particles.colour[i]];
+    const k = particles.alpha[i] * Math.min(1, particles.r[i]);
+    const index = (y * width + x) * 3;
+    pixels[index] += red * k;
+    pixels[index + 1] += green * k;
+    pixels[index + 2] += blue * k;
+  }
+  const bytes = Buffer.alloc(width * height * 3);
+  for (let p = 0; p < bytes.length; p++) bytes[p] = Math.min(255, Math.round(pixels[p]));
+  const info = await sharp(bytes, { raw: { width, height, channels: 3 } })
+    .webp({ quality: 75, effort: 6 })
+    .toFile(join(outDir, "coral-echo.webp"));
+  console.log(`coral: echo ${width}x${height}, ${(info.size / 1024).toFixed(1)} KB`);
+}
+
 await rm(outDir, { recursive: true, force: true });
 await mkdir(outDir, { recursive: true });
-await Promise.all((Object.keys(coralVariants) as CoralVariantName[]).map(render));
+await Promise.all([...(Object.keys(coralVariants) as CoralVariantName[]).map(render), renderEcho()]);

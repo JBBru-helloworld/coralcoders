@@ -86,3 +86,73 @@ export const howItWorks = {
   requirements:
     "All you need is a laptop or desktop computer and a stable internet connection.",
 };
+
+export const tutorSection = {
+  heading: "Meet your tutor",
+} as const;
+
+export const faqSection = {
+  heading: "Questions parents ask",
+  items: [
+    {
+      question: "Is the first lesson really free?",
+      answer:
+        "Yes. Your first 60-minute lesson is free, with no obligation to continue. It is a chance to meet the tutor, try a real lesson and find the right starting point.",
+    },
+    {
+      question: "How long are lessons?",
+      answer: "Lessons are 60 minutes. Longer sessions are available on request.",
+    },
+    {
+      question: "How do online lessons work?",
+      answer:
+        "Lessons run live over Zoom or Google Meet. The tutor and learner share screens, so every idea can be explained, tried and debugged together in real time.",
+    },
+    {
+      question: "What equipment do we need?",
+      answer:
+        "A laptop or desktop computer with a working camera and microphone, plus a stable internet connection. Tablets and phones make coding much harder, so a computer is strongly recommended.",
+    },
+    {
+      question: "Does a parent need to sit in on lessons?",
+      answer:
+        "Usually not. Most children work happily on their own with the tutor. If your child needs help with something that cannot be done over a video call, such as setting up their computer, it helps to have an adult nearby.",
+    },
+    {
+      question: "When are lessons available?",
+      answer:
+        "After school, at weekends and during school holidays. Times are arranged around your schedule, for families in both Mauritius and South Africa.",
+    },
+    {
+      question: "How much do lessons cost?",
+      answer:
+        "Pricing is tailored to the course and the schedule you choose. Send a message and we will put together an option that suits you.",
+    },
+    {
+      question: "Can we reschedule a lesson?",
+      answer: "Yes. You can reschedule for free up to 12 hours before the lesson starts.",
+    },
+    {
+      question: "How will I know my child is progressing?",
+      answer:
+        "Parents receive a progress update once a month, covering what was learnt, what was built and what comes next.",
+    },
+    {
+      question: "My child has never coded before. Is that a problem?",
+      answer:
+        "Not at all. Most young learners start from zero, and every course adapts to the learner's level and pace.",
+    },
+    {
+      question: "What language are lessons taught in?",
+      answer: "All lessons are taught in English.",
+    },
+  ],
+} as const;
+
+export const contactSection = {
+  heading: "Book your free lesson",
+  body: "Send a quick message with the learner's age and what they are curious about. We will reply to arrange a time that works for you.",
+  primaryCta: "Message us on WhatsApp",
+  secondaryCta: "Send an email",
+  details: "Lessons are 60 minutes, online, and taught in English.",
+} as const;

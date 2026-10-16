@@ -8,6 +8,7 @@ import {
   type Tutor,
   absoluteUrl,
   areaServed,
+  brand,
   contact,
   countryNames,
   coursePath,
@@ -26,11 +27,15 @@ type Ref = { "@id": string };
 export const ids = {
   organization: `${siteUrl}/#organization`,
   website: `${siteUrl}/#website`,
-  founder: `${siteUrl}/#founder`,
+  person: `${siteUrl}/#joshua-bonham`,
+  logo: `${siteUrl}/#logo`,
   course: (course: Course) => `${absoluteUrl(coursePath(course))}#course`,
 } as const;
 
 const ref = (id: string): Ref => ({ "@id": id });
+
+/** Absolute URL for a file in /public (no trailing slash). */
+const fileUrl = (path: string) => `${siteUrl}${path}`;
 
 export function organizationSchema(): JsonLdNode {
   return {
@@ -47,6 +52,16 @@ export function organizationSchema(): JsonLdNode {
       name: countryNames[code],
     })),
     knowsLanguage: "en",
+    logo: {
+      "@type": "ImageObject",
+      "@id": ids.logo,
+      url: fileUrl(brand.logoPng.src),
+      contentUrl: fileUrl(brand.logoPng.src),
+      width: brand.logoPng.width,
+      height: brand.logoPng.height,
+      caption: siteName,
+    },
+    image: ref(ids.logo),
     // Every course, referenced by the @id its course page defines in full.
     hasOfferCatalog: {
       "@type": "OfferCatalog",
@@ -60,9 +75,7 @@ export function organizationSchema(): JsonLdNode {
         provider: ref(ids.organization),
       })),
     },
-    // Placeholder until Phase 4 fills in the tutor; personSchema() then
-    // describes the same @id in full.
-    founder: { "@type": "Person", "@id": ids.founder, ...(tutor.name && { name: tutor.name }) },
+    founder: ref(ids.person),
   };
 }
 
@@ -97,7 +110,7 @@ export function courseSchema(course: Course): JsonLdNode {
       "@type": "CourseInstance",
       courseMode: "online",
       inLanguage: "en",
-      instructor: ref(ids.founder),
+      instructor: ref(ids.person),
     },
   };
 }
@@ -114,12 +127,9 @@ export function breadcrumbSchema(items: { name: string; path: string }[]): JsonL
   };
 }
 
-/* Phase 4 hooks: not rendered yet. Add them to the homepage graph once the
- * tutor details and FAQ copy exist. */
-
 export type FaqItem = { question: string; answer: string };
 
-export function faqPageSchema(items: FaqItem[]): JsonLdNode {
+export function faqPageSchema(items: readonly FaqItem[]): JsonLdNode {
   return {
     "@type": "FAQPage",
     "@id": `${siteUrl}/#faq`,
@@ -131,14 +141,33 @@ export function faqPageSchema(items: FaqItem[]): JsonLdNode {
   };
 }
 
-export function personSchema(person: Tutor): JsonLdNode {
+export function personSchema(person: Tutor = tutor): JsonLdNode {
   return {
     "@type": "Person",
-    "@id": ids.founder,
+    "@id": ids.person,
     name: person.name,
-    jobTitle: person.role,
-    description: person.bio,
+    jobTitle: "Founder and Lead Tutor",
+    description: person.bio[0],
+    image: fileUrl(person.photo.src),
     worksFor: ref(ids.organization),
-    ...(person.photo && { image: `${siteUrl}${person.photo.src}` }),
+    alumniOf: ["Sunway University", "Lancaster University"].map((name) => ({
+      "@type": "CollegeOrUniversity",
+      name,
+    })),
+    hasCredential: {
+      "@type": "EducationalOccupationalCredential",
+      name: "Oracle Cloud Infrastructure 2025 Certified Generative AI Professional",
+      credentialCategory: "certification",
+      recognizedBy: { "@type": "Organization", name: "Oracle" },
+    },
+    knowsAbout: [
+      "Scratch",
+      "Python",
+      "SQL",
+      "Machine learning",
+      "Artificial intelligence",
+      "Prompt engineering",
+    ],
+    sameAs: person.links.map((link) => link.href),
   };
 }

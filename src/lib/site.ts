@@ -25,14 +25,18 @@ export type Course = {
 export type Tutor = {
   name: string;
   role: string;
-  bio: string;
-  credentials: string[];
+  /** Paragraphs. */
+  bio: string[];
+  credentials: { label: string; detail: string }[];
+  links: { label: string; href: string }[];
   photo: {
+    /** Largest version; `srcSet` lists every size. */
     src: string;
+    srcSet: string;
     alt: string;
     width: number;
     height: number;
-  } | null;
+  };
 };
 
 export const siteName = "Coral Coders";
@@ -233,11 +237,62 @@ export function courseMetaDescription(course: Course): string {
 export const pricingNote =
   "Enquire for custom pricing that suits your schedule or your child's.";
 
-// TODO(phase-4): tutor details and photo (public/images/tutor/joshua-bonham.jpg).
 export const tutor: Tutor = {
-  name: "",
-  role: "",
-  bio: "",
-  credentials: [],
-  photo: null,
+  name: "Joshua Bonham",
+  role: "Founder and lead tutor",
+  bio: [
+    "I'm a software engineer specialising in machine learning and AI, and I already teach children to code one-to-one every week. I started Coral Coders to bring that same patient, personal teaching to families across Mauritius and South Africa.",
+    "My lessons are hands-on from the first minute. Learners build real things, make mistakes, fix them and understand why. That is how confidence grows, whether you are six or forty.",
+  ],
+  credentials: [
+    {
+      label: "Education",
+      detail:
+        "Bachelor of Software Engineering (Hons), Sunway University and Lancaster University. CGPA 3.95, six-time Dean's List, Jeffrey Cheah Entrance Scholarship.",
+    },
+    {
+      label: "Teaching",
+      detail: "Coding tutor to 14 young learners 1:1, covering Scratch, Minecraft Education and Python.",
+    },
+    {
+      label: "Industry",
+      detail:
+        "Built AI workflows as a Data Scientist Intern at Touch 'n Go Digital, and shipped AI features as a Junior Software Engineer at the travel startup Plandora.",
+    },
+    {
+      label: "Certified",
+      detail: "Oracle Cloud Infrastructure 2025 Certified Generative AI Professional.",
+    },
+    { label: "Hackathon", detail: "1st Runner-Up and Best Pitch at ImagineHack 2024." },
+    {
+      label: "Community",
+      detail: "Coordinated a five-week Generative AI Study Jam for over 900 participants.",
+    },
+  ],
+  links: [
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/joshuabonham03/" },
+    { label: "GitHub", href: "https://github.com/JBBru-helloworld" },
+    { label: "Portfolio", href: "https://jbbru.com/" },
+  ],
+  // Optimised, metadata-free copies built by scripts/build-brand.mts.
+  photo: {
+    src: "/images/tutor/joshua-bonham-1280.webp",
+    srcSet: "/images/tutor/joshua-bonham-640.webp 480w, /images/tutor/joshua-bonham-1280.webp 960w",
+    alt: "Joshua Bonham, founder and lead tutor at Coral Coders",
+    width: 960,
+    height: 1280,
+  },
 };
+
+/** The logo is a mark only; it is always shown beside the serif wordmark. */
+export const brand = {
+  mark: {
+    src: "/brand/logo-mark-96.webp",
+    srcSet: "/brand/logo-mark-96.webp 1x, /brand/logo-mark-192.webp 2x",
+    /** Intrinsic size of the 96px-high rendition. */
+    width: 113,
+    height: 96,
+  },
+  /** 512px-high PNG for schema.org and other machine readers. */
+  logoPng: { src: "/brand/logo-mark-512.png", width: 603, height: 512 },
+} as const;

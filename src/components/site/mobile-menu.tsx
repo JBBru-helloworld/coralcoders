@@ -14,6 +14,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { type Course, contact, navSections, siteName } from "@/lib/site";
+import { Wordmark } from "./wordmark";
 import { prefersReducedMotion, useNavState } from "./nav-state";
 
 export function MobileMenu({ isHome, course }: { isHome: boolean; course?: Course }) {
@@ -61,8 +62,8 @@ export function MobileMenu({ isHome, course }: { isHome: boolean; course?: Cours
         className="w-full gap-0 bg-sand p-0 data-[side=right]:w-full data-[side=right]:border-l-0 data-[side=right]:sm:max-w-md"
       >
         <div className="flex h-(--nav-height) items-center justify-between px-5">
-          <SheetTitle className="font-heading text-[1.625rem] leading-none font-normal tracking-[-0.01em]">
-            {siteName}
+          <SheetTitle aria-label={siteName} className="font-normal text-ink">
+            <Wordmark />
           </SheetTitle>
           <SheetDescription className="sr-only">Site navigation</SheetDescription>
           <SheetClose

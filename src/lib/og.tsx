@@ -19,6 +19,12 @@ const colours = {
   mist: "#60697B",
 };
 
+/** The coral mark (built by scripts/build-brand.mts) as a data URL for Satori. */
+async function loadMark() {
+  const png = await readFile(join(process.cwd(), "src/assets/brand/logo-mark.png"));
+  return `data:image/png;base64,${png.toString("base64")}`;
+}
+
 async function loadFonts() {
   const dir = join(process.cwd(), "src/assets/fonts");
   const [serif, sans] = await Promise.all([
@@ -42,6 +48,7 @@ type OgImageInput = {
 
 export async function renderOgImage({ title, subtitle, detail }: OgImageInput) {
   const long = title.length > 40;
+  const mark = await loadMark();
 
   return new ImageResponse(
     (
@@ -78,8 +85,10 @@ export async function renderOgImage({ title, subtitle, detail }: OgImageInput) {
             width: "100%",
           }}
         >
-          <div style={{ display: "flex", fontFamily: "Instrument Serif", fontSize: 40 }}>
-            {siteName}
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element -- Satori renders plain img */}
+            <img src={mark} width={56} height={48} alt="" />
+            <div style={{ display: "flex", fontFamily: "Instrument Serif", fontSize: 40 }}>{siteName}</div>
           </div>
 
           <div style={{ display: "flex", flexDirection: "column" }}>

@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/build-coral.mts && next dev",
-    "build": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/build-coral.mts && next build",
+    "dev": "pnpm assets && next dev",
+    "build": "pnpm assets && next build",
     "start": "next start",
     "lint": "eslint",
-    "coral": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/build-coral.mts"
+    "assets": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/build-brand.mts && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/build-coral.mts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
