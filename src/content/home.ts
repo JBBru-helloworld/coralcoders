@@ -121,7 +121,7 @@ export const faqSection = {
     {
       question: "When are lessons available?",
       answer:
-        "After school, at weekends and during school holidays. Times are arranged around your schedule, for families in both Mauritius and South Africa.",
+        "After school, at weekends and during school holidays. Times are arranged around your schedule and time zone, wherever you are.",
     },
     {
       question: "How much do lessons cost?",

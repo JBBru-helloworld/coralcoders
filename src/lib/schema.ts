@@ -10,7 +10,6 @@ import {
   areaServed,
   brand,
   contact,
-  countryNames,
   coursePath,
   courses,
   description,
@@ -47,10 +46,7 @@ export function organizationSchema(): JsonLdNode {
     email: contact.email,
     telephone: contact.whatsappE164,
     sameAs: [contact.instagramUrl],
-    areaServed: areaServed.map((code) => ({
-      "@type": "Country",
-      name: countryNames[code],
-    })),
+    areaServed,
     knowsLanguage: "en",
     logo: {
       "@type": "ImageObject",

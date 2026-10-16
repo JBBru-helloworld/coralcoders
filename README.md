@@ -1,6 +1,6 @@
 # Coral Coders
 
-The website for Coral Coders, online 1:1 coding lessons for children and adults in Mauritius and South Africa.
+The website for Coral Coders, online 1:1 coding lessons for children and adults worldwide.
 
 **Live:** https://coralcoders.com
 

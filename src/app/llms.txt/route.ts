@@ -1,8 +1,6 @@
 import {
   absoluteUrl,
-  areaServed,
   contact,
-  countryNames,
   coursePath,
   courses,
   description,
@@ -16,7 +14,6 @@ import {
 export const dynamic = "force-static";
 
 export function GET() {
-  const countries = areaServed.map((code) => countryNames[code]).join(" and ");
   const courseLines = (audience: "kids" | "adults") =>
     courses
       .filter((course) => course.audience === audience)
@@ -30,7 +27,7 @@ export function GET() {
 
 > ${description}
 
-${siteName} offers online one-to-one coding lessons for children and adults in ${countries}. ${lessonLanguageNote} The first lesson is free. ${pricingNote}
+${siteName} offers online one-to-one coding lessons for children and adults worldwide. ${lessonLanguageNote} The first lesson is free. ${pricingNote}
 
 ## Courses for children
 

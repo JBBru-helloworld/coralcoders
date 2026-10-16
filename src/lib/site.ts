@@ -63,10 +63,10 @@ export const homeTitle = "Coral Coders | Online Coding Classes for Kids and Adul
 export const tagline = "Coding lessons for curious minds";
 
 export const description =
-  "Online 1:1 coding lessons in Scratch, Python and AI for kids and adults in Mauritius and South Africa. Your first lesson is free.";
+  "Online 1:1 coding lessons in Scratch, Python and AI for kids and adults worldwide. Your first lesson is free.";
 
 export const footerDescription =
-  "Online 1:1 coding lessons for children and adults across Mauritius and South Africa.";
+  "Online 1:1 coding lessons for children and adults worldwide.";
 
 export const lessonLanguageNote = "All lessons are taught in English, online.";
 
@@ -76,12 +76,8 @@ export const lessonLanguageNote = "All lessons are taught in English, online.";
  */
 export const locale = "en-GB";
 
-export const areaServed = ["MU", "ZA"] as const;
-
-export const countryNames: Record<(typeof areaServed)[number], string> = {
-  MU: "Mauritius",
-  ZA: "South Africa",
-};
+/** Lessons are online, so there is no regional limit (schema.org areaServed). */
+export const areaServed = "Worldwide";
 
 export const contact = {
   email: "coralcoderz@gmail.com",
@@ -143,7 +139,7 @@ export const courses: Course[] = [
     marker: "6+",
     metaTitle: "Scratch Coding Lessons for Kids Online",
     metaDescription:
-      "Online 1:1 Scratch lessons for kids aged 6+ in Mauritius and South Africa. Animations, games and real coding ideas. Your first lesson is free.",
+      "Online 1:1 Scratch lessons for kids aged 6+ worldwide. Animations, games and real coding ideas. Your first lesson is free.",
     audience: "kids",
     ageLabel: "Ages 6+",
     minAge: 6,
@@ -157,7 +153,7 @@ export const courses: Course[] = [
     marker: "9+",
     metaTitle: "Python Lessons for Kids Online, Ages 9+",
     metaDescription:
-      "Online 1:1 Python coding lessons for kids aged 9+ in Mauritius and South Africa. Games, quizzes and real programs. Your first lesson is free.",
+      "Online 1:1 Python coding lessons for kids aged 9+ worldwide. Games, quizzes and real programs. Your first lesson is free.",
     audience: "kids",
     ageLabel: "Ages 9+",
     minAge: 9,
@@ -171,7 +167,7 @@ export const courses: Course[] = [
     marker: "12+",
     metaTitle: "AI and Machine Learning Lessons for Teens",
     metaDescription:
-      "Online 1:1 AI and machine learning lessons for teens aged 12+ in Mauritius and South Africa, with real projects in Python. First lesson free.",
+      "Online 1:1 AI and machine learning lessons for teens aged 12+ worldwide, with real projects in Python. First lesson free.",
     audience: "kids",
     ageLabel: "Ages 12+",
     minAge: 12,
@@ -185,7 +181,7 @@ export const courses: Course[] = [
     marker: "Py",
     metaTitle: "Python Lessons for Adults Online",
     metaDescription:
-      "Learn Python online with a 1:1 tutor: automation, data analysis and pandas, for adults and students in Mauritius and South Africa. First lesson free.",
+      "Learn Python online with a 1:1 tutor: automation, data analysis and pandas, for adults and students worldwide. First lesson free.",
     audience: "adults",
     ageLabel: "Professionals and university students",
     minAge: 18,
@@ -199,7 +195,7 @@ export const courses: Course[] = [
     marker: "SQL",
     metaTitle: "SQL Tutor Online: Lessons for Beginners",
     metaDescription:
-      "Learn SQL online with a 1:1 tutor: queries, joins and reporting for beginners and professionals in Mauritius and South Africa. First lesson free.",
+      "Learn SQL online with a 1:1 tutor: queries, joins and reporting for beginners and professionals worldwide. First lesson free.",
     audience: "adults",
     ageLabel: "Professionals and university students",
     minAge: 18,
@@ -213,7 +209,7 @@ export const courses: Course[] = [
     marker: "AI",
     metaTitle: "AI and Prompt Engineering Lessons Online",
     metaDescription:
-      "Online 1:1 lessons in AI, machine learning and prompt engineering for professionals and students in Mauritius and South Africa. First lesson free.",
+      "Online 1:1 lessons in AI, machine learning and prompt engineering for professionals and students worldwide. First lesson free.",
     audience: "adults",
     ageLabel: "Professionals and university students",
     minAge: 18,
@@ -245,7 +241,7 @@ export const tutor: Tutor = {
   name: "Joshua Bonham",
   role: "Founder and lead tutor",
   bio: [
-    "I'm a software engineer specialising in machine learning and AI, and I already teach children to code one-to-one every week. I started Coral Coders to bring that same patient, personal teaching to families across Mauritius and South Africa.",
+    "I'm a software engineer specialising in machine learning and AI, and I already teach children to code one-to-one every week. I started Coral Coders to bring that same patient, personal teaching to families around the world.",
     "My lessons are hands-on from the first minute. Learners build real things, make mistakes, fix them and understand why. That is how confidence grows, whether you are six or forty.",
   ],
   credentials: [
