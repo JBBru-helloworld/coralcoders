@@ -220,35 +220,21 @@
   }
 }
 
-/* Transparent at the top; sand with a light blur and hairline once scrolled.
-   Opacity stays at 0.96 so mist nav links keep 4.5:1 even over ink sections. */
+/* Transparent at the top; fully opaque sand with a hairline once scrolled,
+   so nothing ghosts through over either sand or ink sections. */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 40;
   height: var(--nav-height);
   border-bottom: 1px solid transparent;
-  transition-property: background-color, border-color, backdrop-filter;
+  transition-property: background-color, border-color;
   transition-duration: var(--duration-base);
   transition-timing-function: var(--ease-out);
 }
 .site-header[data-scrolled="true"] {
-  background-color: oklch(0.963 0.010 72.7 / 0.96);
+  background-color: var(--sand);
   border-bottom-color: var(--mist-line);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-}
-@supports not (backdrop-filter: blur(1px)) {
-  .site-header[data-scrolled="true"] {
-    background-color: var(--sand);
-  }
-}
-@media (prefers-reduced-transparency: reduce) {
-  .site-header[data-scrolled="true"] {
-    background-color: var(--sand);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
 }
 
 /* Active section: a short coral hairline under the link, nothing heavier. */
@@ -273,39 +259,53 @@
  * Homepage
  * ---------------------------------------------------------------------- */
 
-/* Hero coral: each depth level draws after the one before it, trunk first,
-   finishing in about 1.2s. Pure CSS, runs once. */
-.coral-segment {
-  stroke-dasharray: 1;
-  animation: coral-draw 300ms cubic-bezier(0.33, 0.1, 0.5, 1) both;
-  animation-delay: calc(var(--level) * 150ms);
+/* Hero particle coral: an ink window into the reef. The WebP fallback shows
+   first; the canvas (coral-engine.ts) fades in over it after load. */
+.coral-panel {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border-radius: 1.75rem;
+  background: var(--ink);
+  isolation: isolate;
 }
-.coral-tip {
-  animation: coral-tip 300ms var(--ease-out) 1050ms both;
-}
-@keyframes coral-draw {
-  from {
-    stroke-dashoffset: 1;
-  }
-  to {
-    stroke-dashoffset: 0;
+@media (width >= 64rem) {
+  .coral-panel {
+    aspect-ratio: 4 / 5;
   }
 }
-@keyframes coral-tip {
-  from {
-    opacity: 0;
-  }
+.coral-fallback,
+.coral-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity var(--duration-slow) var(--ease-out);
 }
-
-/* The one hero gradient: a faint coral-to-lagoon wash behind the drawing. */
-.hero-visual::before {
+.coral-fallback {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.coral-fallback img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.coral-canvas {
+  opacity: 0;
+}
+/* Subtle inner vignette and a hairline edge, above the image and canvas. */
+.coral-panel::after {
   content: "";
   position: absolute;
-  inset: -12% -16% 0 0;
-  z-index: -1;
-  background:
-    radial-gradient(48% 46% at 58% 40%, oklch(0.708 0.185 30.1 / 0.12), transparent 100%),
-    radial-gradient(36% 34% at 72% 76%, oklch(0.698 0.117 185.5 / 0.08), transparent 100%);
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(130% 100% at 50% 40%, transparent 55%, oklch(0.12 0.03 263 / 0.6));
+  box-shadow: inset 0 0 0 1px oklch(0.963 0.010 72.7 / 0.08);
 }
 
 /* Section entrances: a short fade-up driven by scroll position. No JS; where
@@ -359,10 +359,6 @@
  * Opacity and colour changes may still fade briefly (handled per component).
  */
 @media (prefers-reduced-motion: reduce) {
-  .coral-segment,
-  .coral-tip {
-    animation: none;
-  }
   *,
   *::before,
   *::after {

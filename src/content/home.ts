@@ -12,20 +12,19 @@ export const hero = {
   primaryCta: "Book a free lesson",
   secondaryCta: "Email us",
   trust: ["First lesson free", "Always 1:1, never group classes", "Taught in English, online"],
-  coralLabel: "A coral branch drawn by a short Python program",
+  coralLabel: "A glowing coral made of thousands of particles, drawn by a short Python program",
 } as const;
 
-/** The Python turtle program shown in the hero code card. */
-export const coralProgram = `def coral(length, depth):
+/** The program shown in the hero code card; src/lib/coral.ts grows the same coral. */
+export const coralProgram = `import random
+
+def coral(x, y, angle, width, depth):
     if depth == 0:
         return
-    forward(length)
-    left(25)
-    coral(length * 0.7, depth - 1)
-    right(50)
-    coral(length * 0.7, depth - 1)
-    left(25)
-    back(length)`;
+    tip = grow(x, y, angle, length=width * 5)
+    scatter(dots=300, along=(x, y, tip), spread=width)
+    for turn in random.sample([-35, -10, 15, 40], k=2):
+        coral(*tip, angle + turn, width * 0.75, depth - 1)`;
 
 export const whyCode = {
   heading: "Why start coding now?",

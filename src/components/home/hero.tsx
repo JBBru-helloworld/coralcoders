@@ -31,15 +31,14 @@ export function Hero() {
           </ul>
         </div>
 
-        <div className="hero-visual relative mx-auto w-full max-w-md lg:max-w-none">
-          <HeroCoral
-            label={hero.coralLabel}
-            className="relative ml-auto block h-auto w-[82%] sm:w-[72%] lg:w-[88%]"
-          />
+        {/* Mobile and tablet: panel, then the code card below it. Desktop: the
+            card overlaps the panel's bottom-left corner, outside its edge. */}
+        <div className="relative mx-auto w-full max-w-[40rem] lg:mr-0 lg:max-w-none lg:pb-10 lg:pl-12">
+          <HeroCoral label={hero.coralLabel} />
           <CodeCard
             code={coralProgram}
             filename="coral.py"
-            className="relative -mt-[38%] mr-auto w-full max-w-[22rem] sm:-mt-[30%] lg:-mt-[34%]"
+            className="relative mt-4 w-full lg:absolute lg:bottom-0 lg:left-0 lg:mt-0 lg:w-[min(28.75rem,100%)]"
           />
         </div>
       </div>

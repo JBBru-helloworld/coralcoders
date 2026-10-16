@@ -38,7 +38,7 @@ The tokens live in `src/app/globals.css` and the motion presets in `src/lib/moti
 - Bright coral is never used for body text on sand. Use `text-coral-deep` (or `text-link`).
 - Coral buttons carry **ink** labels, never white.
 - No purple, no rainbow gradients, no gradient text. `--gradient-hero` (coral to lagoon, low alpha) is the only gradient and is used in the hero at most.
-- The sticky header is the one translucent surface: sand at 0.96 opacity with a 14px blur once scrolled. Do not lower the opacity; at 0.82 the mist nav links fall to 3.38:1 over ink sections.
+- The sticky header is transparent at the top of the page and fully opaque sand with a hairline border once scrolled. No blur: any translucency lets content ghost through and drops nav contrast over ink sections.
 - No glassmorphism as decoration. Translucency is allowed only where it does a job (for example a sticky nav over scrolling content) and must fall back to solid under `prefers-reduced-transparency`.
 - Light is the default. An ink section is made by adding the `dark` class to that section, which remaps shadcn's semantic variables. It is never set on `<html>`, and there is no theme toggle.
 
@@ -79,6 +79,38 @@ Body copy stays within 60 to 75 characters per line.
 | `springMomentum` (TS) | `{ type: "spring", bounce: 0.2, duration: 0.3 }` |
 
 `prefers-reduced-motion: reduce` is respected globally: CSS animation and transition durations collapse, smooth scrolling is turned off, and `MotionConfig reducedMotion="user"` wraps the app.
+
+## Hero visual: particle coral
+
+A staghorn coral made of glowing particles, inside an ink panel: a window into the reef within the light hero. The code card beside it shows the program that grows it (`src/lib/coral.ts` follows the same steps).
+
+**Shape.** Deterministic (skeleton seed `3`). A short, thick base fans into 3 branches, then each branch splits into 2 (sometimes 3) using turns from {-35, -10, 15, 40} degrees with jitter, never mirrored. Branches are curved (quadratic Bézier), bend gently upwards, and are about `width * 5` long. Each child is 0.72 to 0.8 of its parent's width. 4 depth levels, blunt rounded tips, no buds or dots at the ends.
+
+**Particles.** Sampled along each branch with a Gaussian spread across it (dense core, soft edges), plus 4% stray particles and a 2% glow at the base. Radius 0.5 to 1.6 CSS px (skewed small), alpha 0.26 to 0.7.
+
+| Colour | Share |
+|---|---|
+| coral `#FF6B57` | 70% |
+| coral-deep `#C2412F` | 18% |
+| warm highlight (coral towards sand) `#FBAFA2` | 7% |
+| lagoon `#1FB5A8` | 5% |
+
+| Variant | Viewport | Panel aspect | Particles |
+|---|---|---|---|
+| mobile | under 768px | 4:3 | 3,500 |
+| tablet | 768 to 1023px | 4:3 | 6,000 |
+| desktop | 1024px and up | 4:5 | 9,000 |
+
+**Panel.** Ink, 28px radius, inner vignette and a sand hairline at 8% opacity. Aspect ratio is fixed per breakpoint (no layout shift). On desktop the code card (raised ink, 460px max) overlaps the bottom-left corner, 3rem outside the panel edge; on mobile and tablet it sits below the panel and never covers the coral. Long code lines wrap with a hanging indent, never scroll sideways.
+
+**Rendering.**
+- Static first: `scripts/build-coral.mts` renders the settled coral at 2x with additive blending and writes WebP tiles to `public/coral/` (generated at build, not committed). The fallback is a 2x2 grid of plain `<img>` tiles so that no single image is larger than the H1, which must stay the Largest Contentful Paint element. Users without JavaScript, and with reduced motion, see only this.
+- Canvas enhancement: mounted after the `load` event in an idle callback, from a dynamically imported chunk (about 3 KB gzipped). `lighter` compositing, device pixel ratio capped at 2.
+- Intro (once, about 1.6s): particles ease in from a scatter with the `--ease-out` curve, staggered by depth, base first. The canvas cross-fades over the fallback (300ms).
+- Idle current: fades in over 2s after the intro, so the settled frame is the fallback. The settled particles are baked into 4 phase-group layers; each frame shears them by a slow sine (one cycle every 7s), so the base stays still and the tips drift about 3px. Drawn at 30fps.
+- The loop stops when the panel is off-screen or the tab is hidden, and resumes cleanly. Reduced motion: no canvas.
+
+**Performance budget** (mobile, Slow 4G, 4x CPU): the H1 stays the LCP element, CLS 0, hero JS under 15 KB gzipped, idle scripting under 4ms per frame (measured 0.22ms). The intro is the one sanctioned motion longer than 300ms.
 
 ## Apple design principles we apply
 
