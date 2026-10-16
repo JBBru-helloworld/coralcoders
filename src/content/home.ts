@@ -8,7 +8,7 @@ export type TitledParagraph = { title: string; body: string };
 export const hero = {
   heading: "Coding lessons for curious minds.",
   subheading:
-    "Live 1:1 lessons online in Scratch, Python and AI for children from age 6, plus Python, SQL and AI for adults. Taught at your pace, from anywhere in Mauritius or South Africa.",
+    "Live 1:1 lessons online in Scratch, Python and AI for children from age 6, plus Python, SQL and AI for adults. Taught at your pace, for learners worldwide.",
   primaryCta: "Book a free lesson",
   secondaryCta: "Email us",
   trust: ["First lesson free", "Always 1:1, never group classes", "Taught in English, online"],
