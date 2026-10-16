@@ -56,3 +56,10 @@ next-env.d.ts
 
 # wrangler dev local state
 /.wrangler/
+
+# /brag launch video renders
+/brag-output/
+/brag-output-*/
+
+# brag skill (16 MB of bundled audio); reinstall from skills-lock.json
+/.claude/skills/brag/
