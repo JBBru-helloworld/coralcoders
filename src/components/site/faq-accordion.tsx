@@ -16,11 +16,11 @@ export function FaqAccordion({ items, className }: { items: readonly FaqItem[]; 
       {items.map((item) => (
         <AccordionPrimitive.Item key={item.question} value={item.question} className="border-b border-mist-line">
           <AccordionPrimitive.Header className="m-0">
-            <AccordionPrimitive.Trigger className="group flex w-full items-start justify-between gap-6 rounded-md py-5 text-left text-lead font-medium text-ink transition-colors duration-(--duration-fast) hover:text-coral-deep">
+            <AccordionPrimitive.Trigger className="group flex w-full items-start justify-between gap-6 rounded-md py-5 text-left text-lead font-medium text-ink transition-colors duration-(--duration-fast) pointer-hover:text-coral-deep">
               {item.question}
               <ChevronDown
                 aria-hidden="true"
-                className="mt-1 size-5 shrink-0 text-mist transition-transform duration-(--duration-base) ease-out group-aria-expanded:rotate-180"
+                className="mt-1 size-5 shrink-0 text-mist transition-[rotate] duration-(--duration-spring) ease-spring group-aria-expanded:rotate-180"
               />
             </AccordionPrimitive.Trigger>
           </AccordionPrimitive.Header>

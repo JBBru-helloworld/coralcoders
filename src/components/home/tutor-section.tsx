@@ -29,7 +29,7 @@ export function TutorSection() {
         </div>
 
         <div className="flex flex-col">
-          <div className="reveal flex flex-col gap-6">
+          <div className="flex flex-col gap-6">
             <h2 id="tutor-heading" className="text-h1">
               {tutorSection.heading}
             </h2>
@@ -63,13 +63,10 @@ export function TutorSection() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-1 rounded-sm text-small font-medium text-link underline decoration-current/30 underline-offset-4 transition-colors duration-(--duration-fast) hover:decoration-current"
+                  className="group/link inline-flex items-center gap-1 rounded-sm text-small font-medium text-link"
                 >
-                  {link.label}
-                  <ArrowUpRight
-                    aria-hidden="true"
-                    className="size-4 transition-transform duration-(--duration-fast) ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  />
+                  <span className="u-link">{link.label}</span>
+                  <ArrowUpRight aria-hidden="true" className="nudge size-4" />
                   <span className="sr-only"> (opens in a new tab)</span>
                 </a>
               </li>

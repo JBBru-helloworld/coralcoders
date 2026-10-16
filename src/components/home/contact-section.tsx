@@ -12,7 +12,7 @@ import {
 import { cn } from "@/lib/utils";
 
 const detailLink =
-  "rounded-sm text-sand underline decoration-sand/25 underline-offset-4 transition-colors duration-(--duration-fast) hover:decoration-sand/70";
+  "rounded-sm text-sand underline decoration-sand/25 underline-offset-4 transition-colors duration-(--duration-fast) pointer-hover:decoration-sand/70";
 
 type ContactSectionProps = {
   /** "contact" on the homepage (the mobile CTA bar hides while it is in view). */
@@ -53,15 +53,15 @@ export function ContactSection({ id = "contact", course, compact = false }: Cont
           compact ? "py-20 md:py-24" : "py-24 md:py-32",
         )}
       >
-        <h2 id={headingId} className={cn("reveal text-sand", compact ? "text-h2" : "text-h1")}>
+        <h2 id={headingId} className={cn("text-sand", compact ? "text-h2" : "text-h1")}>
           {contactSection.heading}
         </h2>
-        <p className="reveal max-w-[48ch] text-lead text-mist-on-ink">{contactSection.body}</p>
-        <div className="reveal flex flex-wrap gap-3">
+        <p className="max-w-[48ch] text-lead text-mist-on-ink">{contactSection.body}</p>
+        <div className="flex flex-wrap gap-3">
           <WhatsAppButton size="lg" course={course} label={contactSection.primaryCta} />
           <EmailButton size="lg" course={course} label={contactSection.secondaryCta} />
         </div>
-        <dl className="reveal grid gap-x-10 gap-y-3 text-small sm:grid-cols-[auto_auto] sm:justify-start">
+        <dl className="grid gap-x-10 gap-y-3 text-small sm:grid-cols-[auto_auto] sm:justify-start">
           <div className="flex flex-col gap-0.5">
             <dt className="text-mist-on-ink">WhatsApp</dt>
             <dd>
@@ -82,7 +82,7 @@ export function ContactSection({ id = "contact", course, compact = false }: Cont
             </dd>
           </div>
         </dl>
-        <p className="reveal text-small text-mist-on-ink">{contactSection.details}</p>
+        <p className="text-small text-mist-on-ink">{contactSection.details}</p>
       </div>
     </section>
   );

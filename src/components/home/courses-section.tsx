@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { WhatsAppButton } from "@/components/cta/whatsapp-button";
+import { Tabs as TabsPrimitive } from "@base-ui/react/tabs";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { adultCoursesHash, coursesSection } from "@/content/home";
 import { prefersReducedMotion } from "@/components/site/nav-state";
@@ -58,7 +59,7 @@ export function CoursesSection() {
       className="scroll-mt-(--nav-height)"
     >
       <div className="mx-auto w-full max-w-6xl px-5 py-24 sm:px-8 md:py-32">
-        <div className="reveal flex max-w-xl flex-col gap-5">
+        <div className="flex max-w-xl flex-col gap-5">
           <h2 id="courses-heading" className="text-h1">
             {coursesSection.heading}
           </h2>
@@ -73,13 +74,17 @@ export function CoursesSection() {
           <TabsList
             activateOnFocus
             aria-label="Course groups"
-            className="h-auto rounded-full border border-mist-line bg-sand-raised p-1 group-data-horizontal/tabs:h-auto"
+            className="course-tabs relative h-auto rounded-full border border-mist-line bg-sand-raised p-1 group-data-horizontal/tabs:h-auto"
           >
+            {/* One ink pill that springs between tabs (clip-path, see globals.css). */}
+            <TabsPrimitive.Indicator className="tab-indicator">
+              <span className="tab-indicator-fill" />
+            </TabsPrimitive.Indicator>
             {groups.map((audience) => (
               <TabsTrigger
                 key={audience}
                 value={audience}
-                className="h-10 rounded-full px-5 text-small text-mist transition-colors duration-(--duration-fast) ease-out hover:not-data-active:text-ink data-active:bg-ink data-active:text-sand data-active:shadow-none focus-visible:border-transparent focus-visible:ring-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                className="z-10 h-10 rounded-full px-5 text-small text-mist transition-colors duration-(--duration-spring) ease-out pointer-hover:not-data-active:text-ink data-active:bg-transparent data-active:text-sand data-active:shadow-none focus-visible:border-transparent focus-visible:ring-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               >
                 {coursesSection.groups[audience].label}
               </TabsTrigger>
@@ -91,15 +96,9 @@ export function CoursesSection() {
               key={audience}
               value={audience}
               keepMounted
-              className="mt-8 text-base data-hidden:hidden"
+              className="course-panel mt-8 text-base data-hidden:hidden"
             >
-              <ul className="border-t border-mist-line">
-                {courses
-                  .filter((course) => course.audience === audience)
-                  .map((course) => (
-                    <CourseRow key={course.slug} course={course} />
-                  ))}
-              </ul>
+              <CourseList audience={audience} />
             </TabsContent>
           ))}
         </Tabs>
@@ -108,12 +107,25 @@ export function CoursesSection() {
   );
 }
 
+/** Memoised so a tab switch re-renders only the tabs, not every course row. */
+const CourseList = memo(function CourseList({ audience }: { audience: Audience }) {
+  return (
+    <ul className="border-t border-mist-line">
+      {courses
+        .filter((course) => course.audience === audience)
+        .map((course) => (
+          <CourseRow key={course.slug} course={course} />
+        ))}
+    </ul>
+  );
+});
+
 function CourseRow({ course }: { course: Course }) {
   return (
-    <li className="grid gap-x-10 gap-y-4 border-b border-mist-line py-10 md:grid-cols-[9rem_1fr_auto] md:items-start md:py-12">
+    <li className="course-row grid gap-x-10 gap-y-4 border-b border-mist-line py-10 md:grid-cols-[9rem_1fr_auto] md:items-start md:py-12">
       <p
         aria-hidden="true"
-        className="font-heading text-[clamp(3.5rem,2.6rem+3.5vw,5.5rem)] leading-[0.85] tracking-[-0.02em] text-coral-deep"
+        className="course-marker font-heading text-[clamp(3.5rem,2.6rem+3.5vw,5.5rem)] leading-[0.85] tracking-[-0.02em] text-coral-deep"
       >
         {course.marker}
       </p>
@@ -133,13 +145,13 @@ function CourseRow({ course }: { course: Course }) {
         />
         <Link
           href={coursePath(course)}
-          className="group inline-flex items-center gap-1.5 rounded-sm text-small font-medium text-link underline decoration-current/30 underline-offset-4 transition-colors duration-(--duration-fast) hover:decoration-current"
+          className="learn-more group/link inline-flex items-center gap-1.5 rounded-sm text-small font-medium text-link underline decoration-current/30 underline-offset-4 transition-colors duration-(--duration-fast) pointer-hover:decoration-current"
         >
           {coursesSection.learnMore}
           <span className="sr-only"> about {course.title} lessons</span>
           <ArrowRight
             aria-hidden="true"
-            className="size-4 transition-transform duration-(--duration-fast) ease-out group-hover:translate-x-0.5"
+            className="nudge size-4"
           />
         </Link>
       </div>

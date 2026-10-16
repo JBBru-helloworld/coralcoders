@@ -13,7 +13,7 @@ import {
 } from "@/lib/site";
 
 const linkClass =
-  "rounded-sm text-mist-on-ink transition-colors duration-(--duration-fast) ease-out hover:text-sand";
+  "u-link rounded-sm text-mist-on-ink transition-colors duration-(--duration-fast) ease-out pointer-hover:text-sand";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -83,7 +83,7 @@ export function SiteFooter() {
               href="https://skiper-ui.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-sm underline decoration-sand/25 underline-offset-[3px] transition-colors duration-(--duration-fast) hover:text-sand hover:decoration-sand/60"
+              className="rounded-sm underline decoration-sand/25 underline-offset-[3px] transition-colors duration-(--duration-fast) pointer-hover:text-sand pointer-hover:decoration-sand/60"
             >
               Skiper UI
               <span className="sr-only"> (opens in a new tab)</span>

@@ -66,19 +66,52 @@ Body copy stays within 60 to 75 characters per line.
 
 ## Motion
 
+Restraint first: every animation shows state, hierarchy or feedback, or rewards an action. Nothing loops except the hero coral.
+
 | Token | Value |
 |---|---|
-| `--duration-instant` | 100ms (press feedback) |
+| `--duration-instant` | 100ms (press down) |
 | `--duration-fast` | 160ms (hover, colour) |
-| `--duration-base` | 220ms (small reveals) |
-| `--duration-slow` | 300ms (the ceiling for any UI transition) |
-| `ease-out` | `cubic-bezier(0.22, 1, 0.36, 1)` |
+| `--duration-base` | 220ms (small reveals, FAQ height) |
+| `--duration-spring` | 240ms (springs: tabs, nav line, arrows, button release) |
+| `--duration-slow` | 300ms (panel cross-fade, sheet slide) |
+| `ease-out` | `cubic-bezier(0.22, 1, 0.36, 1)` (entrances) |
 | `ease-in-out` | `cubic-bezier(0.65, 0, 0.35, 1)` |
-| `ease-press` | `cubic-bezier(0.3, 0, 0.2, 1)` |
+| `ease-press` | `cubic-bezier(0.3, 0, 0.2, 1)` (press down) |
+| `ease-spring` | a damped spring (damping 0.85) as CSS `linear()`: 99% at half time, 0.6% overshoot |
 | `spring` (TS) | `{ type: "spring", bounce: 0, duration: 0.3 }` |
 | `springMomentum` (TS) | `{ type: "spring", bounce: 0.2, duration: 0.3 }` |
 
-`prefers-reduced-motion: reduce` is respected globally: CSS animation and transition durations collapse, smooth scrolling is turned off, and `MotionConfig reducedMotion="user"` wraps the app.
+**Rules**
+
+- Animate only `transform` (including `translate`/`scale`), `opacity`, `clip-path` and `filter`. Colour fades on hover are paint-only and allowed. Never animate layout, except the FAQ panel height through Base UI's `--accordion-panel-height`.
+- UI feedback 150 to 250ms; entrances 300 to 600ms. Springs for interactive elements, `ease-out` for entrances.
+- Prefer CSS: transitions retarget from the current value, so every interaction is interruptible. Scroll-driven effects use `animation-timeline` and are fully visible where unsupported.
+- Hover only under `@media (hover: hover) and (pointer: fine)` (the `pointer-hover:` variant); touch gets press feedback (scale 0.97, spring back).
+- Headings and calls to action never wait to appear. Entrances (`.reveal`, 12px fade-up) are for supporting content only.
+- Zero layout shift.
+
+**Inventory**
+
+| Element | Trigger | What moves | Timing |
+|---|---|---|---|
+| Buttons | press / release | `scale` 0.97 | 100ms down, spring back |
+| Coral button | hover | `filter: brightness(1.06)` | spring 240ms |
+| Arrows (Learn more, adults link, tutor, related courses) | hover | `translateX(3px)` | spring 240ms |
+| Links (nav, footer, tutor, related, breadcrumb) | hover, focus | underline `scaleX` grows from left (skiper40 style) | 220ms ease-out |
+| Nav active line | section change | `clip-path` slides between links | spring 240ms |
+| Course tabs | select | ink pill `clip-path` slides (the fill under it covers only the active tab at rest, stepping its edges, never interpolating); panel fades + rises 8px | spring 240ms; 300ms ease-out |
+| Course rows | hover on Learn more | row tint `opacity`, numeral up 2px | 220ms; spring |
+| Why Code statement | scroll | each word `opacity` 0.4 to 1 (dimmed words stay above 3:1) | scroll-linked |
+| How it works | scroll | connectors `scaleX`/`scaleY`, next number `opacity` | scroll-linked |
+| FAQ | open / close | height (Base UI variable), chevron 180deg, answer fades in after 60ms | 220ms; spring; 220ms |
+| Mobile menu | open / close | sheet `translate` (spring), links stagger 35ms; exit together | 300ms in; 160ms out |
+| Section entrances | scroll | `.reveal` fade-up 12px | scroll-linked, entry 0 to 30% |
+| Header | scroll past 24px | background and hairline colour | 220ms |
+| Mobile CTA bar | past hero / over #contact | `translate`, `opacity` | 220ms |
+| Hero coral | load | canvas intro and idle current (see below) | 1.6s once, then idle |
+
+**Reduced motion.** Under `prefers-reduced-motion: reduce`, transitions are limited to opacity and colour (150ms), so transforms and clip-paths snap to their end state and state changes still fade. Scroll-driven and entrance keyframes exist only for `no-preference`; the course panel and mobile sheet get opacity-only fades instead. Smooth scrolling is off, the coral canvas never mounts, and `MotionConfig reducedMotion="user"` wraps the app.
 
 ## Hero visual: particle coral
 

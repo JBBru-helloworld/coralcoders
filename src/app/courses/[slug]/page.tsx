@@ -73,7 +73,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
       <nav aria-label="Breadcrumb" className={`${wrap} pt-8`}>
         <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-small text-mist">
           <li>
-            <Link href="/" className="rounded-sm transition-colors duration-(--duration-fast) hover:text-ink">
+            <Link href="/" className="u-link rounded-sm transition-colors duration-(--duration-fast) pointer-hover:text-ink">
               Home
             </Link>
           </li>
@@ -81,7 +81,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
           <li>
             <Link
               href="/#courses"
-              className="rounded-sm transition-colors duration-(--duration-fast) hover:text-ink"
+              className="u-link rounded-sm transition-colors duration-(--duration-fast) pointer-hover:text-ink"
             >
               Courses
             </Link>
@@ -121,7 +121,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
       {/* 3. What you will learn. */}
       <section aria-labelledby="learn-heading" className="border-t border-mist-line">
         <div className={`${wrap} ${splitGrid} py-20 md:py-28`}>
-          <h2 id="learn-heading" className="reveal text-h2">
+          <h2 id="learn-heading" className="text-h2">
             {coursePageHeadings.learn}
           </h2>
           <ul className="reveal grid gap-x-12 sm:grid-cols-2">
@@ -137,7 +137,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
       {/* 4. What learners build: the most persuasive section, given room on ink. */}
       <section aria-labelledby="build-heading" className="dark bg-background text-foreground">
         <div className={`${wrap} py-24 md:py-32`}>
-          <h2 id="build-heading" className="reveal text-h1 text-sand">
+          <h2 id="build-heading" className="text-h1 text-sand">
             {coursePageHeadings.build[course.audience]}
           </h2>
           <ol className="mt-12 border-b border-sand/10 md:mt-16">
@@ -159,11 +159,11 @@ export default async function CoursePage({ params }: CoursePageProps) {
       {/* 5 and 6. Who it is for, and how lessons work. */}
       <section aria-label="Who it is for and how lessons work" className="bg-sand-raised">
         <div className={`${wrap} grid gap-16 py-20 md:py-28 lg:grid-cols-2 lg:gap-20`}>
-          <div className="reveal flex flex-col gap-5">
+          <div className="flex flex-col gap-5">
             <h2 className="text-h2">{coursePageHeadings.whoFor}</h2>
             <p className="max-w-[48ch] text-lead text-mist">{content.whoFor}</p>
           </div>
-          <div className="reveal flex flex-col gap-5">
+          <div className="flex flex-col gap-5">
             <h2 className="text-h2">{coursePageHeadings.lessons}</h2>
             <ul className="border-t border-mist-line">
               {lessonPoints.map((point) => (
@@ -179,7 +179,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
       {/* 7. Where it leads. */}
       <section aria-labelledby="next-heading" className="border-t border-mist-line">
         <div className={`${wrap} ${splitGrid} py-20 md:py-28`}>
-          <h2 id="next-heading" className="reveal text-h2">
+          <h2 id="next-heading" className="text-h2">
             {coursePageHeadings.next}
           </h2>
           <div className="reveal flex flex-col gap-8">
@@ -189,15 +189,17 @@ export default async function CoursePage({ params }: CoursePageProps) {
                 <li key={item.slug} className="border-b border-mist-line">
                   <Link
                     href={coursePath(item)}
-                    className="group flex items-center justify-between gap-6 rounded-sm py-5 transition-colors duration-(--duration-fast) hover:text-coral-deep"
+                    className="group/link flex items-center justify-between gap-6 rounded-sm py-5 transition-colors duration-(--duration-fast) pointer-hover:text-coral-deep"
                   >
                     <span className="flex flex-col gap-1">
-                      <span className="font-heading text-h3">{item.title} lessons</span>
+                      <span className="font-heading text-h3">
+                        <span className="u-link">{item.title} lessons</span>
+                      </span>
                       <span className="text-small text-mist">{item.ageLabel}</span>
                     </span>
                     <ArrowRight
                       aria-hidden="true"
-                      className="size-5 shrink-0 text-coral-deep transition-transform duration-(--duration-fast) ease-out group-hover:translate-x-1"
+                      className="nudge size-5 shrink-0 text-coral-deep"
                     />
                   </Link>
                 </li>
@@ -210,7 +212,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
       {/* 8. Course FAQ. */}
       <section aria-labelledby="course-faq-heading" className="border-t border-mist-line bg-sand-raised">
         <div className={`${wrap} ${splitGrid} py-20 md:py-28`}>
-          <h2 id="course-faq-heading" className="reveal text-h2">
+          <h2 id="course-faq-heading" className="text-h2">
             {coursePageHeadings.faq}
           </h2>
           <FaqAccordion items={content.faq} className="reveal" />

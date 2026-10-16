@@ -51,7 +51,7 @@ export function MobileMenu({ isHome, course }: { isHome: boolean; course?: Cours
     >
       <SheetTrigger
         aria-label="Open menu"
-        className="-mr-2 inline-flex size-11 items-center justify-center rounded-full text-ink transition-colors duration-(--duration-fast) hover:bg-ink/[0.05] lg:hidden"
+        className="-mr-2 inline-flex size-11 items-center justify-center rounded-full text-ink transition-colors duration-(--duration-fast) pointer-hover:bg-ink/[0.05] lg:hidden"
       >
         <Menu className="size-5" aria-hidden="true" />
       </SheetTrigger>
@@ -59,7 +59,7 @@ export function MobileMenu({ isHome, course }: { isHome: boolean; course?: Cours
       <SheetContent
         side="right"
         showCloseButton={false}
-        className="w-full gap-0 bg-sand p-0 data-[side=right]:w-full data-[side=right]:border-l-0 data-[side=right]:sm:max-w-md"
+        className="menu-sheet w-full gap-0 bg-sand p-0 data-[side=right]:w-full data-[side=right]:border-l-0 data-[side=right]:sm:max-w-md"
       >
         <div className="flex h-(--nav-height) items-center justify-between px-5">
           <SheetTitle aria-label={siteName} className="font-normal text-ink">
@@ -68,7 +68,7 @@ export function MobileMenu({ isHome, course }: { isHome: boolean; course?: Cours
           <SheetDescription className="sr-only">Site navigation</SheetDescription>
           <SheetClose
             aria-label="Close menu"
-            className="-mr-2 inline-flex size-11 items-center justify-center rounded-full text-ink transition-colors duration-(--duration-fast) hover:bg-ink/[0.05]"
+            className="-mr-2 inline-flex size-11 items-center justify-center rounded-full text-ink transition-colors duration-(--duration-fast) pointer-hover:bg-ink/[0.05]"
           >
             <X className="size-5" aria-hidden="true" />
           </SheetClose>
@@ -76,12 +76,16 @@ export function MobileMenu({ isHome, course }: { isHome: boolean; course?: Cours
 
         <nav aria-label="Mobile" className="flex-1 overflow-y-auto px-5 pt-6">
           <ul className="flex flex-col">
-            {navSections.map((section) => (
-              <li key={section.id}>
+            {navSections.map((section, index) => (
+              <li
+                key={section.id}
+                className="menu-link"
+                style={{ "--i": index } as React.CSSProperties}
+              >
                 <a
                   href={isHome ? `#${section.id}` : `/#${section.id}`}
                   onClick={(event) => goToSection(event, section.id)}
-                  className="block rounded-md py-2.5 font-heading text-h2 text-ink transition-colors duration-(--duration-fast) hover:text-coral-deep"
+                  className="block rounded-md py-2.5 font-heading text-h2 text-ink transition-colors duration-(--duration-fast) pointer-hover:text-coral-deep"
                 >
                   {section.label}
                 </a>

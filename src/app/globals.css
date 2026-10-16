@@ -9,6 +9,15 @@
  */
 @custom-variant dark (&:is(.dark *));
 
+/* Hover styles only for devices with a precise pointer; touch gets press feedback. */
+@custom-variant pointer-hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
 /* ------------------------------------------------------------------------
  * Palette: "Reef at dusk"
  * OKLCH values, original hex in comments. See DESIGN.md for usage rules.
@@ -58,8 +67,8 @@
   --link: var(--coral-deep);
   --radius: 0.75rem;
 
-  /* Motion durations. All UI transitions 300ms or under. Easings are in @theme
-     below; springs live in src/lib/motion.ts */
+  /* Motion durations. UI feedback 150 to 250ms; entrances 300 to 600ms.
+     Easings are in @theme below; JS springs live in src/lib/motion.ts */
   --nav-height: 4rem;
   --mobile-cta-height: 4.5rem;
 
@@ -67,6 +76,8 @@
   --duration-fast: 160ms;
   --duration-base: 220ms;
   --duration-slow: 300ms;
+  --duration-spring: 240ms;
+  --duration-entrance: 450ms;
 }
 
 .dark {
@@ -178,6 +189,10 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-press: cubic-bezier(0.3, 0, 0.2, 1);
+  /* A damped spring (damping 0.85) sampled as linear(): 99% at half time,
+     0.6% overshoot. Interruptible, because CSS transitions retarget from the
+     current value. Used with --duration-spring. */
+  --ease-spring: linear(0, 0.054, 0.176, 0.322, 0.468, 0.598, 0.707, 0.795, 0.862, 0.912, 0.947, 0.971, 0.987, 0.997, 1.003, 1.005, 1.006, 1.006, 1.005, 1.005, 1.004, 1.003, 1.002, 1.001, 1);
 }
 
 @layer base {
@@ -237,22 +252,102 @@
   border-bottom-color: var(--mist-line);
 }
 
-/* Active section: a short coral hairline under the link, nothing heavier. */
-.nav-link::after {
-  content: "";
+/* Active section: one coral hairline that slides between links (clip-path
+   only, so the line moves and resizes without animating layout). */
+.nav-indicator {
   position: absolute;
-  left: 0.75rem;
-  right: 0.75rem;
-  bottom: 0.3rem;
+  inset: auto 0 0.3rem 0;
   height: 1.5px;
   border-radius: 1px;
   background: var(--coral);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--duration-base) var(--ease-out);
+  pointer-events: none;
+  clip-path: inset(0 var(--nav-indicator-right, 100%) 0 var(--nav-indicator-left, 0));
+  opacity: 0;
+  transition:
+    clip-path var(--duration-spring) var(--ease-spring),
+    opacity var(--duration-fast) var(--ease-out);
 }
-.nav-link[aria-current="true"]::after {
+.nav-indicator[data-visible="true"] {
+  opacity: 1;
+}
+/* Appearing from nothing: fade in at the new link instead of sliding from 0. */
+.nav-indicator[data-instant="true"] {
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+/* ------------------------------------------------------------------------
+ * Links, buttons and other interaction feedback
+ * ---------------------------------------------------------------------- */
+
+/* Quiet link underline (in the style of Skiper UI's skiper40, re-implemented
+   in CSS): grows from the left on hover, retracts to the right. Fine pointers
+   only; keyboard focus shows it too. */
+.u-link {
+  position: relative;
+}
+.u-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.15em;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--duration-base) var(--ease-out);
+  pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .u-link:hover::after,
+  .group\/link:hover .u-link::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+.u-link:focus-visible::after,
+.group\/link:focus-visible .u-link::after {
   transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Arrow icons nudge 3px towards where the link goes. */
+@media (hover: hover) and (pointer: fine) {
+  .group\/link:hover .nudge {
+    transform: translateX(3px);
+  }
+}
+.nudge {
+  transition: transform var(--duration-spring) var(--ease-spring);
+}
+
+/* Homepage course rows: hovering "Learn more" warms the row a touch, lifts
+   the numeral 2px and nudges the arrow. The row itself is not a link. */
+.course-row {
+  position: relative;
+  isolation: isolate;
+}
+.course-row::before {
+  content: "";
+  position: absolute;
+  inset: 0 -1rem;
+  z-index: -1;
+  border-radius: 1rem;
+  background: var(--sand-sunk);
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+.course-marker {
+  transition: transform var(--duration-spring) var(--ease-spring);
+}
+@media (hover: hover) and (pointer: fine) {
+  .course-row:has(.learn-more:hover)::before {
+    opacity: 1;
+  }
+  .course-row:has(.learn-more:hover) .course-marker {
+    transform: translateY(-2px);
+  }
 }
 
 /* ------------------------------------------------------------------------
@@ -323,22 +418,186 @@
 .faq-panel[data-ending-style] {
   height: 0;
 }
+.faq-panel > p {
+  opacity: 1;
+  transition: opacity var(--duration-base) var(--ease-out) 60ms;
+}
+.faq-panel[data-starting-style] > p,
+.faq-panel[data-ending-style] > p {
+  opacity: 0;
+  transition-duration: var(--duration-instant);
+  transition-delay: 0ms;
+}
 
-/* Section entrances: a short fade-up driven by scroll position. No JS; where
-   scroll timelines are unsupported, content simply appears. */
+/* Section entrances: one fade-up (12px) driven by scroll position, used on
+   supporting content only. Headings and calls to action never wait. No JS;
+   where scroll timelines are unsupported, content simply appears. */
 @supports (animation-timeline: view()) {
   @media screen and (prefers-reduced-motion: no-preference) {
     .reveal {
       animation: reveal linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 35%;
+      animation-range: entry 0% entry 30%;
+    }
+
+    /* Why Code statement: each word brightens from 40% as the sentence
+       scrolls into reading position (the effect of skiper31, in CSS). 40%
+       keeps even the dimmed words above 3:1 on ink. */
+    .statement {
+      view-timeline: --statement block;
+    }
+    .statement-word {
+      animation: word-in linear both;
+      animation-timeline: --statement;
+      animation-range: cover calc(8% + var(--i) * 2.2%) cover calc(14% + var(--i) * 2.2%);
+    }
+
+    /* How it works: each connector draws from the step before it, and the
+       next number brightens as the line reaches it. */
+    .steps {
+      view-timeline: --steps block;
+    }
+    .steps > li:not(:last-child)::after {
+      animation: draw-y linear both;
+      animation-timeline: --steps;
+      animation-range: cover calc(20% + var(--step) * 16%) cover calc(34% + var(--step) * 16%);
+    }
+    .steps > li:not(:first-child) .step-number {
+      animation: step-in linear both;
+      animation-timeline: --steps;
+      animation-range: cover calc(18% + var(--step) * 16%) cover calc(22% + var(--step) * 16%);
+    }
+  }
+  @media screen and (prefers-reduced-motion: no-preference) and (width >= 48rem) {
+    .steps > li:not(:last-child)::after {
+      animation-name: draw-x;
     }
   }
 }
 @keyframes reveal {
   from {
     opacity: 0;
-    translate: 0 16px;
+    translate: 0 12px;
+  }
+}
+@keyframes word-in {
+  from {
+    opacity: 0.4;
+  }
+}
+@keyframes draw-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes draw-y {
+  from {
+    transform: scaleY(0);
+  }
+}
+@keyframes step-in {
+  from {
+    opacity: 0.2;
+  }
+}
+
+/* Course tabs: one ink pill that springs between tabs. The indicator spans
+   the list and animates its clip-path (Base UI provides the offsets). The ink
+   fill inside it covers only the active tab at rest, so contrast checkers see
+   the real background behind each tab; during a slide it stretches over both
+   tabs by stepping its leading edge at the start and its trailing edge at
+   the end, never interpolating. Before hydration the active tab paints its
+   own pill. */
+.tab-indicator {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  clip-path: inset(
+    var(--active-tab-top) var(--active-tab-right) var(--active-tab-bottom) var(--active-tab-left)
+    round 9999px
+  );
+  transition: clip-path var(--duration-spring) var(--ease-spring);
+}
+.tab-indicator-fill {
+  position: absolute;
+  top: var(--active-tab-top);
+  right: var(--active-tab-right);
+  bottom: var(--active-tab-bottom);
+  left: var(--active-tab-left);
+  border-radius: 9999px;
+  background: var(--ink);
+  transition:
+    left var(--duration-spring) step-end,
+    right var(--duration-spring) step-start;
+}
+.tab-indicator[data-activation-direction="left"] .tab-indicator-fill {
+  transition:
+    left var(--duration-spring) step-start,
+    right var(--duration-spring) step-end;
+}
+.course-tabs:not(:has(.tab-indicator)) [role="tab"][aria-selected="true"] {
+  background: var(--ink);
+}
+/* The newly shown panel cross-fades in with a slight rise, only on a real
+   switch (Base UI marks the direction; "none" on first render). */
+@media (prefers-reduced-motion: no-preference) {
+  .course-panel:not([hidden]):not([data-activation-direction="none"]) {
+    animation: panel-in var(--duration-slow) var(--ease-out) both;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .course-panel:not([hidden]):not([data-activation-direction="none"]) {
+    animation: fade-in 150ms linear both;
+  }
+}
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Mobile menu: the sheet springs in from the right and the links stagger in
+   35ms apart; on close the whole sheet leaves together, quickly. These rules
+   are unlayered, so they override the shadcn Sheet's utility transitions. */
+.menu-sheet[data-side="right"] {
+  transition:
+    translate var(--duration-slow) var(--ease-spring),
+    opacity var(--duration-fast) var(--ease-out);
+}
+.menu-sheet[data-side="right"][data-starting-style] {
+  translate: 100% 0;
+  opacity: 1;
+}
+.menu-sheet[data-side="right"][data-ending-style] {
+  translate: 2.5rem 0;
+  opacity: 0;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-sheet[data-side="right"][data-starting-style] {
+    translate: 0 0;
+    opacity: 0;
+  }
+}
+/* Links stagger in as the sheet opens. */
+@media (prefers-reduced-motion: no-preference) {
+  .menu-link {
+    animation: menu-link-in var(--duration-slow) var(--ease-out) both;
+    animation-delay: calc(60ms + var(--i) * 35ms);
+  }
+}
+@keyframes menu-link-in {
+  from {
+    opacity: 0;
+    translate: 12px 0;
   }
 }
 
@@ -352,9 +611,11 @@
   bottom: -3rem;
   width: 1px;
   background: var(--mist-line);
+  transform-origin: top;
 }
 @media (width >= 48rem) {
   .steps > li:not(:last-child)::after {
+    transform-origin: left;
     left: 3.5rem;
     right: -2.5rem;
     top: 1.75rem;
@@ -371,16 +632,18 @@
 }
 
 /*
- * Reduced motion: no movement, no springs, no parallax.
- * Opacity and colour changes may still fade briefly (handled per component).
+ * Reduced motion: no movement, scaling or sliding. Transitions are limited to
+ * opacity and colour (150ms) so state changes stay perceivable; transforms and
+ * clip-paths snap to their end state. Scroll-driven and entrance keyframes are
+ * only defined for no-preference, with opacity-only variants where needed.
  */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-property: opacity, color, background-color, border-color !important;
+    transition-duration: 150ms !important;
+    transition-delay: 0ms !important;
     scroll-behavior: auto !important;
   }
 }

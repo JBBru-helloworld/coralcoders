@@ -9,11 +9,27 @@ export function WhyCode() {
       className="dark scroll-mt-(--nav-height) bg-background text-foreground"
     >
       <div className="mx-auto w-full max-w-6xl px-5 py-24 sm:px-8 md:py-32">
-        <div className="reveal grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,2.2fr)] md:gap-12">
+        <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,2.2fr)] md:gap-12">
           <h2 id="why-code-heading" className="text-h3 text-mist-on-ink md:pt-3">
             {whyCode.heading}
           </h2>
-          <p className="max-w-[22ch] font-heading text-h1 text-sand">{whyCode.statement}</p>
+          {/* Words brighten one by one as the sentence scrolls into place (CSS
+              scroll timeline). Screen readers get the sentence once, from the
+              visually hidden copy; the word spans are hidden from them. */}
+          <p className="statement max-w-[22ch] font-heading text-h1 text-sand">
+            <span className="sr-only">{whyCode.statement}</span>
+            <span aria-hidden="true">
+              {whyCode.statement.split(" ").map((word, index) => (
+                <span
+                  key={index}
+                  className="statement-word"
+                  style={{ "--i": index } as React.CSSProperties}
+                >
+                  {word}{" "}
+                </span>
+              ))}
+            </span>
+          </p>
         </div>
 
         <ol className="mt-16 grid gap-x-16 gap-y-12 md:mt-24 md:grid-cols-2">
@@ -33,16 +49,16 @@ export function WhyCode() {
           ))}
         </ol>
 
-        <p className="reveal mt-16 flex flex-wrap items-baseline gap-x-2 gap-y-1 border-t border-sand/10 pt-8 text-lead text-mist-on-ink md:mt-24">
+        <p className="mt-16 flex flex-wrap items-baseline gap-x-2 gap-y-1 border-t border-sand/10 pt-8 text-lead text-mist-on-ink md:mt-24">
           {whyCode.adultsPrompt}{" "}
           <a
             href={`#${adultCoursesHash}`}
-            className="group inline-flex items-center gap-1.5 rounded-sm font-medium text-coral underline decoration-coral/40 underline-offset-4 transition-colors duration-(--duration-fast) hover:decoration-coral"
+            className="group/link inline-flex items-center gap-1.5 rounded-sm font-medium text-coral underline decoration-coral/40 underline-offset-4 transition-colors duration-(--duration-fast) pointer-hover:decoration-coral"
           >
             {whyCode.adultsLink}
             <ArrowRight
               aria-hidden="true"
-              className="size-4 transition-transform duration-(--duration-fast) ease-out group-hover:translate-x-0.5"
+              className="nudge size-4"
             />
           </a>
         </p>
