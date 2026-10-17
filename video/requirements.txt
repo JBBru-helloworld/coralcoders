@@ -1,0 +1,7 @@
+# Python 3.12, in video/.venv (not conda base):
+#   /opt/homebrew/bin/python3.12 -m venv .venv && .venv/bin/pip install -r requirements.txt
+# System: ffmpeg (Homebrew). The voiceover is the owner's own recording;
+# faster-whisper gives the word timings and checks every line against the script.
+faster-whisper==1.2.1
+ctranslate2==4.8.3
+numpy==2.5.4

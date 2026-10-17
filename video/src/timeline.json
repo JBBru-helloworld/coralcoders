@@ -1,0 +1,452 @@
+{
+  "fps": 30,
+  "voiceEnd": 32.423,
+  "durationInFrames": 1018,
+  "lines": [
+    {
+      "n": 1,
+      "file": "vo/line-1.wav",
+      "start": 0.8,
+      "end": 2.329,
+      "subtitle": "Every big idea starts small.",
+      "kinetic": "starts small.",
+      "words": [
+        {
+          "text": "Every",
+          "start": 0.82,
+          "end": 1.06
+        },
+        {
+          "text": "big",
+          "start": 1.06,
+          "end": 1.28
+        },
+        {
+          "text": "idea",
+          "start": 1.28,
+          "end": 1.54
+        },
+        {
+          "text": "starts",
+          "start": 1.54,
+          "end": 1.82
+        },
+        {
+          "text": "small.",
+          "start": 1.82,
+          "end": 2.2
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "file": "vo/line-2.wav",
+      "start": 2.829,
+      "end": 6.177,
+      "subtitle": "Whether that's a loop, a sprite, or one line of code.",
+      "kinetic": "A loop. / A sprite. / One line of code.",
+      "words": [
+        {
+          "text": "Whether",
+          "start": 2.849,
+          "end": 3.049
+        },
+        {
+          "text": "that's",
+          "start": 3.049,
+          "end": 3.469
+        },
+        {
+          "text": "a",
+          "start": 3.469,
+          "end": 3.589
+        },
+        {
+          "text": "loop,",
+          "start": 3.589,
+          "end": 3.829
+        },
+        {
+          "text": "a",
+          "start": 4.229,
+          "end": 4.349
+        },
+        {
+          "text": "sprite,",
+          "start": 4.489,
+          "end": 4.709
+        },
+        {
+          "text": "or",
+          "start": 5.169,
+          "end": 5.329
+        },
+        {
+          "text": "one",
+          "start": 5.329,
+          "end": 5.509
+        },
+        {
+          "text": "line",
+          "start": 5.509,
+          "end": 5.689
+        },
+        {
+          "text": "of",
+          "start": 5.689,
+          "end": 5.849
+        },
+        {
+          "text": "code.",
+          "start": 5.849,
+          "end": 6.089
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "file": "vo/line-3.wav",
+      "start": 6.677,
+      "end": 8.312,
+      "subtitle": "But then, it grows.",
+      "kinetic": "it grows.",
+      "words": [
+        {
+          "text": "But",
+          "start": 6.697,
+          "end": 6.817
+        },
+        {
+          "text": "then,",
+          "start": 6.817,
+          "end": 7.117
+        },
+        {
+          "text": "it",
+          "start": 7.577,
+          "end": 7.717
+        },
+        {
+          "text": "grows.",
+          "start": 7.717,
+          "end": 8.077
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "file": "vo/line-4.wav",
+      "start": 9.712,
+      "end": 13.546,
+      "subtitle": "Coral Coders. Live 1:1 coding lessons, online.",
+      "kinetic": "Coral Coders",
+      "words": [
+        {
+          "text": "Coral",
+          "start": 9.732,
+          "end": 9.972
+        },
+        {
+          "text": "Coders.",
+          "start": 9.972,
+          "end": 10.472
+        },
+        {
+          "text": "Live",
+          "start": 10.792,
+          "end": 11.172
+        },
+        {
+          "text": "1:1",
+          "start": 11.252,
+          "end": 11.872
+        },
+        {
+          "text": "coding",
+          "start": 11.872,
+          "end": 12.212
+        },
+        {
+          "text": "lessons,",
+          "start": 12.212,
+          "end": 12.732
+        },
+        {
+          "text": "online.",
+          "start": 12.952,
+          "end": 13.292
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "file": "vo/line-5.wav",
+      "start": 14.146,
+      "end": 17.798,
+      "subtitle": "Scratch from 6. Python from 9. AI from 12.",
+      "kinetic": "6+ / 9+ / 12+",
+      "words": [
+        {
+          "text": "Scratch",
+          "start": 14.186,
+          "end": 14.506
+        },
+        {
+          "text": "from",
+          "start": 14.506,
+          "end": 14.666
+        },
+        {
+          "text": "6.",
+          "start": 14.666,
+          "end": 14.986
+        },
+        {
+          "text": "Python",
+          "start": 15.546,
+          "end": 15.806
+        },
+        {
+          "text": "from",
+          "start": 15.806,
+          "end": 16.006
+        },
+        {
+          "text": "9.",
+          "start": 16.006,
+          "end": 16.326
+        },
+        {
+          "text": "AI",
+          "start": 16.886,
+          "end": 17.126
+        },
+        {
+          "text": "from",
+          "start": 17.126,
+          "end": 17.366
+        },
+        {
+          "text": "12.",
+          "start": 17.366,
+          "end": 17.626
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "file": "vo/line-6.wav",
+      "start": 18.298,
+      "end": 22.257,
+      "subtitle": "And for adults, we even have Python, SQL and AI.",
+      "kinetic": "Python. SQL. AI.",
+      "words": [
+        {
+          "text": "And",
+          "start": 18.338,
+          "end": 18.438
+        },
+        {
+          "text": "for",
+          "start": 18.438,
+          "end": 18.598
+        },
+        {
+          "text": "adults,",
+          "start": 18.598,
+          "end": 18.918
+        },
+        {
+          "text": "we",
+          "start": 19.198,
+          "end": 19.358
+        },
+        {
+          "text": "even",
+          "start": 19.358,
+          "end": 19.558
+        },
+        {
+          "text": "have",
+          "start": 19.558,
+          "end": 19.778
+        },
+        {
+          "text": "Python,",
+          "start": 19.778,
+          "end": 20.218
+        },
+        {
+          "text": "SQL",
+          "start": 20.578,
+          "end": 21.018
+        },
+        {
+          "text": "and",
+          "start": 21.478,
+          "end": 21.698
+        },
+        {
+          "text": "AI.",
+          "start": 21.698,
+          "end": 22.038
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "file": "vo/line-7.wav",
+      "start": 22.857,
+      "end": 26.069,
+      "subtitle": "All taught by a software engineer who builds with AI every day.",
+      "kinetic": "",
+      "words": [
+        {
+          "text": "All",
+          "start": 22.877,
+          "end": 23.057
+        },
+        {
+          "text": "taught",
+          "start": 23.057,
+          "end": 23.377
+        },
+        {
+          "text": "by",
+          "start": 23.377,
+          "end": 23.617
+        },
+        {
+          "text": "a",
+          "start": 23.617,
+          "end": 23.757
+        },
+        {
+          "text": "software",
+          "start": 23.757,
+          "end": 23.997
+        },
+        {
+          "text": "engineer",
+          "start": 23.997,
+          "end": 24.377
+        },
+        {
+          "text": "who",
+          "start": 24.377,
+          "end": 24.597
+        },
+        {
+          "text": "builds",
+          "start": 24.597,
+          "end": 24.897
+        },
+        {
+          "text": "with",
+          "start": 24.897,
+          "end": 25.157
+        },
+        {
+          "text": "AI",
+          "start": 25.237,
+          "end": 25.497
+        },
+        {
+          "text": "every",
+          "start": 25.497,
+          "end": 25.777
+        },
+        {
+          "text": "day.",
+          "start": 25.777,
+          "end": 25.977
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "file": "vo/line-8.wav",
+      "start": 27.269,
+      "end": 29.247,
+      "subtitle": "And your first lesson is absolutely free.",
+      "kinetic": "Your first lesson is absolutely free.",
+      "words": [
+        {
+          "text": "And",
+          "start": 27.289,
+          "end": 27.409
+        },
+        {
+          "text": "your",
+          "start": 27.409,
+          "end": 27.569
+        },
+        {
+          "text": "first",
+          "start": 27.569,
+          "end": 27.789
+        },
+        {
+          "text": "lesson",
+          "start": 27.789,
+          "end": 28.069
+        },
+        {
+          "text": "is",
+          "start": 28.069,
+          "end": 28.269
+        },
+        {
+          "text": "absolutely",
+          "start": 28.269,
+          "end": 28.749
+        },
+        {
+          "text": "free.",
+          "start": 28.749,
+          "end": 29.089
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "file": "vo/line-9.wav",
+      "start": 29.947,
+      "end": 32.423,
+      "subtitle": "Visit coralcoders.com today to sign up.",
+      "kinetic": "Visit / coralcoders.com / today to sign up.",
+      "words": [
+        {
+          "text": "Visit",
+          "start": 30.007,
+          "end": 30.267
+        },
+        {
+          "text": "coralcoders.com",
+          "start": 30.267,
+          "end": 31.407
+        },
+        {
+          "text": "today",
+          "start": 31.407,
+          "end": 31.707
+        },
+        {
+          "text": "to",
+          "start": 31.707,
+          "end": 31.907
+        },
+        {
+          "text": "sign",
+          "start": 31.907,
+          "end": 32.227
+        },
+        {
+          "text": "up.",
+          "start": 32.227,
+          "end": 32.387
+        }
+      ]
+    }
+  ]
+}

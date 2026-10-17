@@ -15,9 +15,8 @@ const eslintConfig = defineConfig([
     // Agent tooling (skills and their bundled scripts), not project code:
     ".claude/**",
     ".agents/**",
-    // Launch video renders and their working files (gitignored):
-    "brag-output/**",
-    "brag-output-*/**",
+    // Launch advert: a standalone Remotion project with its own tooling.
+    "video/**",
   ]),
 ]);
 

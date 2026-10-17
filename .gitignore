@@ -57,9 +57,13 @@ next-env.d.ts
 # wrangler dev local state
 /.wrangler/
 
-# /brag launch video renders
-/brag-output/
-/brag-output-*/
-
-# brag skill (16 MB of bundled audio); reinstall from skills-lock.json
-/.claude/skills/brag/
+# Phase 9 launch advert (Remotion): renders, generated voiceover, Python env
+# and model caches
+/video/node_modules/
+/video/out/
+/video/public/vo/
+# Music: Pixabay's licence forbids redistributing the track on its own
+/video/public/music/
+/video/.venv/
+/video/.cache/
+/video/**/__pycache__/
